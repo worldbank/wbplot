@@ -1,6 +1,6 @@
 {
     "font": {
-        "fontFamily": "Arial",
+        "fontFamily": "Open Sans",
         "fontWeight": {
             "regular": 400,
             "semibold": 600,
@@ -52,7 +52,7 @@
             "xl": 24
         }
     },
-    "chartTitle": {
+    "title": {
         "size": "l",
         "weight": "bold",
         "height": "120",
