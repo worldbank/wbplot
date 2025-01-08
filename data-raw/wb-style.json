@@ -1,6 +1,6 @@
 {
     "font": {
-        "fontFamily": "Times New Roman",
+        "fontFamily": "Arial",
         "fontWeight": {
             "regular": 400,
             "semibold": 600,
@@ -72,7 +72,7 @@
     },
     "note": {
         "size": "s",
-        "weight": "bold",
+        "weight": "regular",
         "height": "150",
         "color": "lightText"
     },
