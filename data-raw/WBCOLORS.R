@@ -1,9 +1,11 @@
-## code to prepare `WBCOLORS` dataset goes here
+# Code to prepare `WBCOLORS` dataset goes here
 
+## All the colors, as a named list
 WBCOLORS <- jsonlite::read_json("data-raw/wb-colors.json", simplifyVector = TRUE)
 
 usethis::use_data(WBCOLORS, overwrite = TRUE)
 
+## Sequential and diverging palettes
 seqPalettes <- c("seq", "seqRev", "seqB", "seqY", "seqP")
 divPalettes <- c("divPosNeg", "divLR")
 
@@ -46,5 +48,149 @@ divPalettesValues[['divLR']] <- colorRampPalette(
     WBCOLORS$div2R3)
   )(256)
 
-WBPALETTES <- c(seqPalettesValues, divPalettesValues)
+## Discrete palettes
+discretePalettesValues <- vector(mode = "list", length = 9)
+names(discretePalettesValues) <- c('default', 'defaultText', 'region', 'regionText', 'income', 'gender', 'urbanisation', 'age', 'binary')
+
+defaultPalette <- c(
+  WBCOLORS$cat1,
+  WBCOLORS$cat2,
+  WBCOLORS$cat3,
+  WBCOLORS$cat4,
+  WBCOLORS$cat5,
+  WBCOLORS$cat6,
+  WBCOLORS$cat7,
+  WBCOLORS$cat8,
+  WBCOLORS$cat9
+  )
+discretePalettesValues[['default']] <- defaultPalette
+
+defaultTextPalette <- c(
+  WBCOLORS$cat1Text,
+  WBCOLORS$cat2Text,
+  WBCOLORS$cat3Text,
+  WBCOLORS$cat4Text,
+  WBCOLORS$cat5Text,
+  WBCOLORS$cat6Text,
+  WBCOLORS$cat7Text,
+  WBCOLORS$cat8Text,
+  WBCOLORS$cat9Text
+)
+discretePalettesValues[['defaultText']] <- defaultTextPalette
+
+regionPalette <- c(
+  WBCOLORS$wld,
+  WBCOLORS$nac,
+  WBCOLORS$lcn,
+  WBCOLORS$sas,
+  WBCOLORS$mea,
+  WBCOLORS$ecs,
+  WBCOLORS$eas,
+  WBCOLORS$ssf,
+  WBCOLORS$afe,
+  WBCOLORS$afw
+)
+names(regionPalette) <- c(
+  "wld",
+  "nac",
+  "lcn",
+  "sas",
+  "mea",
+  "ecs",
+  "eas",
+  "ssf",
+  "afe",
+  "afw"
+)
+discretePalettesValues[['region']] <- regionPalette
+
+regionTextPalette <- c(
+  WBCOLORS$wldText,
+  WBCOLORS$nacText,
+  WBCOLORS$lcnText,
+  WBCOLORS$sasText,
+  WBCOLORS$meaText,
+  WBCOLORS$ecsText,
+  WBCOLORS$easText,
+  WBCOLORS$ssfText,
+  WBCOLORS$afeText,
+  WBCOLORS$afwText
+)
+names(regionTextPalette) <- c(
+  "wld",
+  "nac",
+  "lcn",
+  "sas",
+  "mea",
+  "ecs",
+  "eas",
+  "ssf",
+  "afe",
+  "afw"
+)
+discretePalettesValues[['regionText']] <- regionTextPalette
+
+incomePalette <- c(
+  WBCOLORS$hic,
+  WBCOLORS$umic,
+  WBCOLORS$lmic,
+  WBCOLORS$lic
+)
+names(incomePalette) <- c(
+  "hic",
+  "umic",
+  "lmic",
+  "lic"
+)
+discretePalettesValues[['income']] <- incomePalette
+
+genderPalette <- c(
+  WBCOLORS$male,
+  WBCOLORS$female,
+  WBCOLORS$diverse
+)
+names(genderPalette) <- c(
+  "male",
+  "female",
+  "diverse"
+)
+discretePalettesValues[['gender']] <- genderPalette
+
+urbanisationPalette <- c(
+  WBCOLORS$rural,
+  WBCOLORS$urban
+)
+names(urbanisationPalette) <- c(
+  "rural",
+  "urban"
+)
+discretePalettesValues[['urbanisation']] <- urbanisationPalette
+
+agePalette <- c(
+  WBCOLORS$youngestAge,
+  WBCOLORS$youngerAge,
+  WBCOLORS$middleAge,
+  WBCOLORS$olderAge,
+  WBCOLORS$oldestAge
+)
+names(agePalette) <- c(
+  "youngestAge",
+  "youngerAge",
+  "middleAge",
+  "olderAge",
+  "oldestAge"
+)
+discretePalettesValues[['age']] <- agePalette
+
+binaryPalette <- c(
+  WBCOLORS$yes,
+  WBCOLORS$no
+)
+names(binaryPalette) <- c(
+  "yes",
+  "no"
+)
+discretePalettesValues[['binary']] <- binaryPalette
+
+WBPALETTES <- c(seqPalettesValues, divPalettesValues, discretePalettesValues)
 usethis::use_data(WBPALETTES, overwrite = TRUE)

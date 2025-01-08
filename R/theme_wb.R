@@ -11,9 +11,9 @@
 # TODO
 # [x] Get colors from color names
 # [x] Open Sans
+# [x] Color scales
 # [] Make everything pixel units
 # [] nodeTitle in bold: will require ggtext
-# [] color scales
 # [] zeroLine
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
