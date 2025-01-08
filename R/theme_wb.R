@@ -10,8 +10,8 @@
 
 # TODO
 # [x] Get colors from color names
-# [] Make everything pixel units
 # [x] Open Sans
+# [] Make everything pixel units
 # [] nodeTitle in bold: will require ggtext
 # [] color scales
 # [] zeroLine
@@ -22,17 +22,20 @@
 #' @export
 #'
 
-# Inventory all font files
-font_files <- sysfonts::font_files()
-if(!any(grepl(x = font_files$file, pattern = "^OpenSans"))) {
-  sysfonts::font_add_google(
-    name = "Open Sans"
-  )
-}
 
-showtext::showtext_auto()
 
 theme_wb <- function() {
+
+  # Inventory all font files
+  font_files <- sysfonts::font_files()
+  if(!any(grepl(x = font_files$file, pattern = "^OpenSans"))) {
+    sysfonts::font_add_google(
+      name = "Open Sans"
+    )
+  }
+
+  showtext::showtext_auto()
+
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
