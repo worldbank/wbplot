@@ -13,7 +13,7 @@
 # [x] Open Sans
 # [x] Color scales
 # [x] zeroLine
-# [] nodeTitle in bold: will require ggtext
+# [x] noteTitle in bold
 # [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
