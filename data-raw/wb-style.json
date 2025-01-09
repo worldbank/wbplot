@@ -90,11 +90,11 @@
     },
     "gridLine": {
         "linewidth": 1,
-        "color": "middle",
+        "color": "lighter",
         "dash": "4 2"
     },
     "zeroLine": {
-        "zeroLine": 1,
-        "color": "lighter"
+        "lineWidth": 1,
+        "color": "middle"
     }
 }

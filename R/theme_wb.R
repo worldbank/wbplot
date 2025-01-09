@@ -12,13 +12,18 @@
 # [x] Get colors from color names
 # [x] Open Sans
 # [x] Color scales
-# [] Make everything pixel units
+# [x] zeroLine
 # [] nodeTitle in bold: will require ggtext
-# [] zeroLine
+# [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
 # [] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
 # [] Logo?
+#
+# Questions:
+# - number of breaks
+# - date formatting
+# - scale expansion
 #' @export
 #'
 
@@ -80,7 +85,7 @@ theme_wb <- function() {
     axis.ticks = ggplot2::element_blank(),
 
     panel.grid.major = ggplot2::element_line(
-      color = WBCOLORS$middle,
+      color = get_color(WBSTYLE$gridLine$color),
       linewidth = WBCOLORS$gridLine$lineWidth,
       linetype = "42"
     ),
