@@ -18,7 +18,7 @@
 # [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
-# [] Semibold font
+# [x] Semibold font
 # [] Logo?
 #
 # Questions:
@@ -35,9 +35,15 @@ theme_wb <- function() {
   # Inventory all font files
   font_files <- sysfonts::font_files()
   if(!any(grepl(x = font_files$file, pattern = "^OpenSans"))) {
-    sysfonts::font_add_google(
-      name = "Open Sans"
-    )
+    weights <- c(400, 600, 700)
+    for(weight in weights){
+      sysfonts::font_add_google(
+        name = "Open Sans",
+        family = paste0("Open Sans ", weight),
+        regular.wt = weight
+      )
+    }
+
   }
 
   showtext::showtext_auto()
@@ -53,9 +59,8 @@ theme_wb <- function() {
     ),
 
     plot.title = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$title$weight)),
       size = WBSTYLE$chartLarge$fontSize$l,
-      face = WBSTYLE$title$weight,
       color = get_color(WBSTYLE$title$color),
       # This doesn't seem to work
       lineheight = WBSTYLE$title$height/100
@@ -63,26 +68,23 @@ theme_wb <- function() {
     plot.title.position = "plot",
 
     plot.subtitle = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$subTitle$weight)),
       size = WBSTYLE$chartLarge$fontSize$m,
-      face = "plain",
       color = get_color(WBSTYLE$subTitle$color),
       margin = ggplot2::margin(0,0,30,0)
     ),
 
     plot.caption = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$note$weight)),
       size = WBSTYLE$chartLarge$fontSize$s,
-      face = "plain",
       color = get_color(WBSTYLE$note$color),
       hjust = 0
     ),
     plot.caption.position = "plot",
 
     axis.title = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
       size = WBSTYLE$chartLarge$fontSize$m,
-      face = "plain",
       color = get_color(WBSTYLE$axisLabel$color)
     ),
     axis.title.y = ggplot2::element_text(
@@ -93,9 +95,8 @@ theme_wb <- function() {
     ),
 
     axis.text = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$tickLabel$weight)),
       size = WBSTYLE$chartLarge$fontSize$m,
-      face = "plain",
       color = get_color(WBSTYLE$tickLabel$color)
     ),
 
@@ -110,15 +111,14 @@ theme_wb <- function() {
     panel.grid.minor = ggplot2::element_blank(),
 
     legend.title = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$legendTitle$weight)),
       size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$legendTitle$color)
     ),
     legend.text = ggplot2::element_text(
-      family = WBSTYLE$font$fontFamily,
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
       size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$categoryLabel$color),
-      face = "bold"
     ),
     #legend.key.height = ggplot2::unit(2, "null"),
     #legend.key.width = ggplot2::unit(2, "null"),
