@@ -14,10 +14,11 @@
 # [x] Color scales
 # [x] zeroLine
 # [x] noteTitle in bold
+# [] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
 # [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
-# [] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
+# [] Semibold font
 # [] Logo?
 #
 # Questions:
@@ -44,11 +45,20 @@ theme_wb <- function() {
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
+    plot.margin = ggplot2::margin(
+      t = 20,
+      b = 20,
+      l = 16,
+      r = 16
+    ),
+
     plot.title = ggplot2::element_text(
       family = WBSTYLE$font$fontFamily,
       size = WBSTYLE$chartLarge$fontSize$l,
       face = WBSTYLE$title$weight,
-      color = get_color(WBSTYLE$title$color)
+      color = get_color(WBSTYLE$title$color),
+      # This doesn't seem to work
+      lineheight = WBSTYLE$title$height/100
     ),
     plot.title.position = "plot",
 
@@ -56,7 +66,8 @@ theme_wb <- function() {
       family = WBSTYLE$font$fontFamily,
       size = WBSTYLE$chartLarge$fontSize$m,
       face = "plain",
-      color = get_color(WBSTYLE$subTitle$color)
+      color = get_color(WBSTYLE$subTitle$color),
+      margin = ggplot2::margin(0,0,30,0)
     ),
 
     plot.caption = ggplot2::element_text(
@@ -73,6 +84,12 @@ theme_wb <- function() {
       size = WBSTYLE$chartLarge$fontSize$m,
       face = "plain",
       color = get_color(WBSTYLE$axisLabel$color)
+    ),
+    axis.title.y = ggplot2::element_text(
+      margin = ggplot2::margin(0, 10, 0, 0)
+    ),
+    axis.title.x = ggplot2::element_text(
+      margin = ggplot2::margin(10, 0, 0, 0)
     ),
 
     axis.text = ggplot2::element_text(
@@ -92,12 +109,19 @@ theme_wb <- function() {
 
     panel.grid.minor = ggplot2::element_blank(),
 
+    legend.title = ggplot2::element_text(
+      family = WBSTYLE$font$fontFamily,
+      size = WBSTYLE$chartLarge$fontSize$s,
+      color = get_color(WBSTYLE$legendTitle$color)
+    ),
     legend.text = ggplot2::element_text(
       family = WBSTYLE$font$fontFamily,
       size = WBSTYLE$chartLarge$fontSize$s,
-      color = WBCOLORS$lightText
+      color = get_color(WBSTYLE$categoryLabel$color),
+      face = "bold"
     ),
-    legend.key.width = ggplot2::unit(1, "null"),
+    #legend.key.height = ggplot2::unit(2, "null"),
+    #legend.key.width = ggplot2::unit(2, "null"),
     legend.position = "bottom"
   )
 }

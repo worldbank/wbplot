@@ -55,37 +55,37 @@
     "title": {
         "size": "l",
         "weight": "bold",
-        "height": "120",
+        "height": 120,
         "color": "darkText"
     },
     "subTitle": {
         "size": "m",
         "weight": "regular",
-        "height": "120",
+        "height": 120,
         "color": "lightText"
     },
     "noteTitle": {
         "size": "s",
         "weight": "bold",
-        "height": "150",
+        "height": 150,
         "color": "darkText"
     },
     "note": {
         "size": "s",
         "weight": "regular",
-        "height": "150",
+        "height": 150,
         "color": "lightText"
     },
     "axisLabel": {
         "size": "m",
         "weight": "semibold",
-        "height": "120",
+        "height": 120,
         "color": "darkText"
     },
     "tickLabel": {
         "size": "s",
         "weight": "regular",
-        "height": "120",
+        "height": 120,
         "color": "lightText"
     },
     "gridLine": {
@@ -96,5 +96,18 @@
     "zeroLine": {
         "lineWidth": 1,
         "color": "middle"
+    },
+    "legendTitle": {
+      "size": "m",
+      "weight": "semibold",
+      "height": 120,
+      "color": "darkText"
+    },
+    "categoryLabel": {
+      "size": "s",
+      "weight": "semibold",
+      "height": 120,
+      "color": "darkText",
+      "style": "uppercase"
     }
 }

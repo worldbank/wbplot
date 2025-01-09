@@ -21,6 +21,9 @@ scale_color_wb_d <- function(...,
       return(head(palette, n))
     }
   }
+  makeUpperCase <- function(lowcase){
+    return(toupper(lowcase))
+  }
 
   if(palette %in% c('default', 'defaultText', 'region', 'regionText', 'income', 'gender', 'urbanisation', 'age', 'binary')){
     pal <- WBPALETTES[[palette]]
@@ -29,6 +32,7 @@ scale_color_wb_d <- function(...,
       aesthetics = "colour",
       palette = pal_function(pal),
       na.value = na.value,
+      labels = makeUpperCase,
       ...
     )
   } else {
