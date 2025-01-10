@@ -8,6 +8,8 @@
 #' @param extendYToZero Boolean to extend the y limits to include zero
 #' @param addExpansion Boolean to expand the scales
 #' @param addZeroLine Boolean to add a zero line for the Y scale. This will also extend the Y scale to zero
+#' @param hideVerticalGrid Boolean to hide the vertical grid lines (mostly for datetime x axes)
+#' @param hideHorizontalGrid Boolean to hide the horizontal grid lines (mostly for bar charts and beeswarm plots)
 #'
 #' @return None
 #'
@@ -15,7 +17,7 @@
 #' axes_wb(extendYToZero = TRUE, addExpansion = TRUE, addZeroLine = TRUE)
 
 #' @export
-axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = TRUE) {
+axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = TRUE, hideVerticalGrid = FALSE, hideHorizontalGrid = FALSE) {
   scaleSettings <- list(
     ggplot2::scale_x_continuous(
       # Should the number of ticks be part of the style?
@@ -32,12 +34,23 @@ axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = T
     ggplot2::geom_hline(
       yintercept = 0,
       color = get_color(WBSTYLE$zeroLine$color),
-      linewidth = WBSTYLE$zeroLine$lineWidth/4
+      linewidth = WBSTYLE$zeroLine$lineWidth/3
       #linewidth = 0.5
       )
   )
+
   if(addZeroLine == FALSE){
     scaleSettings <- head(scaleSettings, -1)
   }
+
+  if(hideVerticalGrid){
+    hideGrid <- list(ggplot2::theme(panel.grid.major.x = ggplot2::element_blank()))
+    scaleSettings <- c(scaleSettings, hideGrid)
+  }
+  if(hideHorizontalGrid){
+    hideGrid <- list(ggplot2::theme(panel.grid.major.y = ggplot2::element_blank()))
+    scaleSettings <- c(scaleSettings, hideGrid)
+  }
+
   return(scaleSettings)
 }

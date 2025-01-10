@@ -49,9 +49,10 @@ theme_wb <- function() {
 
   }
 
+  showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
 
-  ggplot2::theme_minimal(base_size = 22) +
+  ggplot2::theme_minimal(base_size = 11) +
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
@@ -67,7 +68,7 @@ theme_wb <- function() {
       #size = WBSTYLE$chartLarge$fontSize$l,
       color = get_color(WBSTYLE$title$color),
       # This doesn't seem to work
-      lineheight = WBSTYLE$title$height/100
+      # lineheight = WBSTYLE$title$height/100
     ),
     plot.title.position = "plot",
 
@@ -80,7 +81,7 @@ theme_wb <- function() {
 
     plot.caption = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$note$weight)),
-      size = WBSTYLE$chartLarge$fontSize$s,
+      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$note$color),
       hjust = 0
     ),
@@ -88,7 +89,7 @@ theme_wb <- function() {
 
     axis.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
-      size = WBSTYLE$chartLarge$fontSize$m,
+      #size = WBSTYLE$chartLarge$fontSize$m,
       color = get_color(WBSTYLE$axisLabel$color)
     ),
     axis.title.y = ggplot2::element_text(
@@ -100,7 +101,7 @@ theme_wb <- function() {
 
     axis.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$tickLabel$weight)),
-      size = WBSTYLE$chartLarge$fontSize$m,
+      #size = WBSTYLE$chartLarge$fontSize$m,
       color = get_color(WBSTYLE$tickLabel$color)
     ),
 
@@ -116,16 +117,16 @@ theme_wb <- function() {
 
     legend.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$legendTitle$weight)),
-      size = WBSTYLE$chartLarge$fontSize$s,
+      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$legendTitle$color)
     ),
     legend.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
-      size = WBSTYLE$chartLarge$fontSize$s,
+      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$categoryLabel$color),
     ),
-    #legend.key.height = ggplot2::unit(2, "null"),
-    #legend.key.width = ggplot2::unit(2, "null"),
+    legend.key.height = ggplot2::unit(1, "null"),
+    #legend.key.width = ggplot2::unit(1, "null"),
     legend.position = "bottom"
   )
 }
