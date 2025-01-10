@@ -1,1 +1,1 @@
-utils::globalVariables(c("WBCOLORS", "WBSTYLE"))
+utils::globalVariables(c("WBCOLORS", "WBSTYLE", "WBPALETTES"))

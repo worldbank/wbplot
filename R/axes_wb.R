@@ -32,7 +32,7 @@ axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = T
     ggplot2::geom_hline(
       yintercept = 0,
       color = get_color(WBSTYLE$zeroLine$color),
-      linewidth = WBSTYLE$zeroLine$lineWidth
+      linewidth = WBSTYLE$zeroLine$lineWidth/4
       #linewidth = 0.5
       )
   )

@@ -50,4 +50,5 @@ rsconnect/
 .Rproj.user
 
 # Development
-developing_wbplot.R
+dev/*
+

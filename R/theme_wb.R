@@ -7,6 +7,7 @@
 #' @examples
 #' theme_wb()
 #'
+#' @importFrom utils head
 
 # TODO
 # [x] Get colors from color names
@@ -14,11 +15,11 @@
 # [x] Color scales
 # [x] zeroLine
 # [x] noteTitle in bold
+# [x] Semibold font
 # [] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
 # [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
-# [x] Semibold font
 # [] Logo?
 #
 # Questions:
@@ -31,6 +32,8 @@
 
 
 theme_wb <- function() {
+
+  ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
 
   # Inventory all font files
   font_files <- sysfonts::font_files()
@@ -48,19 +51,20 @@ theme_wb <- function() {
 
   showtext::showtext_auto()
 
+  ggplot2::theme_minimal(base_size = 22) +
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
     plot.margin = ggplot2::margin(
-      t = 20,
-      b = 20,
-      l = 16,
-      r = 16
+      t = 10,
+      b = 10,
+      l = 8,
+      r = 8
     ),
 
     plot.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$title$weight)),
-      size = WBSTYLE$chartLarge$fontSize$l,
+      #size = WBSTYLE$chartLarge$fontSize$l,
       color = get_color(WBSTYLE$title$color),
       # This doesn't seem to work
       lineheight = WBSTYLE$title$height/100
@@ -69,9 +73,9 @@ theme_wb <- function() {
 
     plot.subtitle = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$subTitle$weight)),
-      size = WBSTYLE$chartLarge$fontSize$m,
+      #size = WBSTYLE$chartLarge$fontSize$m,
       color = get_color(WBSTYLE$subTitle$color),
-      margin = ggplot2::margin(0,0,30,0)
+      #margin = ggplot2::margin(0,0,15,0)
     ),
 
     plot.caption = ggplot2::element_text(
@@ -88,10 +92,10 @@ theme_wb <- function() {
       color = get_color(WBSTYLE$axisLabel$color)
     ),
     axis.title.y = ggplot2::element_text(
-      margin = ggplot2::margin(0, 10, 0, 0)
+      #margin = ggplot2::margin(0, 5, 0, 0)
     ),
     axis.title.x = ggplot2::element_text(
-      margin = ggplot2::margin(10, 0, 0, 0)
+      #margin = ggplot2::margin(5, 0, 0, 0)
     ),
 
     axis.text = ggplot2::element_text(
@@ -104,7 +108,7 @@ theme_wb <- function() {
 
     panel.grid.major = ggplot2::element_line(
       color = get_color(WBSTYLE$gridLine$color),
-      linewidth = WBCOLORS$gridLine$lineWidth,
+      linewidth = WBCOLORS$gridLine$lineWidth/2,
       linetype = "42"
     ),
 
@@ -125,3 +129,18 @@ theme_wb <- function() {
     legend.position = "bottom"
   )
 }
+
+#' World Bank colors
+#'
+#' @format A named character vector of all World Bank colors
+"WBCOLORS"
+
+#' World Bank color palettes
+#'
+#' @format A named list with the sequential, diverging and categorical color palettes, derived from data-raw/wb-colors.json file
+"WBPALETTES"
+
+#' World Bank data visualization style
+#'
+#' @format A nested list with the World Bank visualization styling, derived from ingesting data-raw/wb-style.json file
+"WBSTYLE"
