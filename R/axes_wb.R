@@ -17,7 +17,7 @@
 #' axes_wb(extendYToZero = TRUE, addExpansion = TRUE, addZeroLine = TRUE)
 
 #' @export
-axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = TRUE, hideVerticalGrid = FALSE, hideHorizontalGrid = FALSE) {
+axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = FALSE, hideVerticalGrid = FALSE, hideHorizontalGrid = FALSE) {
   scaleSettings <- list(
     ggplot2::scale_x_continuous(
       # Should the number of ticks be part of the style?
