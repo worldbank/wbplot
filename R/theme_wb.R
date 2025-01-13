@@ -2,6 +2,8 @@
 #'
 #' Creates overrides for a ggplot theme, using the World Bank data visualization style
 #'
+#' @param barChart Boolean to indicate this is a bar chart
+#'
 #' @return None
 #'
 #' @examples
@@ -31,9 +33,10 @@
 
 
 
-theme_wb <- function() {
+theme_wb <- function(barChart = FALSE) {
 
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
+  ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
 
   # Inventory all font files
   font_files <- sysfonts::font_files()
@@ -52,7 +55,7 @@ theme_wb <- function() {
   showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
 
-  ggplot2::theme_minimal(base_size = 11) +
+  theme_custom <- ggplot2::theme_minimal(base_size = 11) +
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
@@ -124,11 +127,31 @@ theme_wb <- function() {
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
       #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$categoryLabel$color),
+      margin = ggplot2::margin(0, 0, 0, 0)
     ),
     legend.key.height = ggplot2::unit(1, "null"),
     #legend.key.width = ggplot2::unit(1, "null"),
+    legend.key.spacing.y = ggplot2::unit(0.7, "lines"),
     legend.position = "bottom"
   )
+
+  if(barChart == TRUE){
+    theme_custom <- theme_custom + ggplot2::theme(
+      axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
+      axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_text(
+        color = WBCOLORS$darkText,
+        family = "Open Sans 600"
+      ),
+      axis.text.x = ggplot2::element_text(
+        color = WBCOLORS$lightText,
+      )
+    )
+  }
+
+  theme_custom
+
 }
 
 #' World Bank colors

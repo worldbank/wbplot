@@ -38,11 +38,18 @@ Add the `axes_wb()` function to a ggplot object after adding `theme_wb()` to it,
 - `hideVerticalGrid`: hide the vertical grid lines. Should be true for date/time scales. Default is FALSE.
 - `hideHorizontalGrid`: hide the horizontal grid lines. Should be true for bar charts and beeswarm plots. Default is FALSE.
 
+```
+ggplot(data, aes(...)) +
+  geom_xyz() +
+  theme_wb() +
+  axis_wb(extendYToZero = TRUE, addZeroLine = FALSE, addExpansion = TRUE, hideVerticalGrid = TRUE, hideHorizontalGrid = FALSE)
+```
+
 ### Colors
 
 #### All colors
 
-All World Bank Data Visualization colors are available through the `WBCOLORS` global variables. Access the colors with `WBCOLORS[['cat1']]` or `WBCOLORS$cat1`.
+All World Bank Data Visualization colors are available through the `WBCOLORS` global variables. Access the colors with `WBCOLORS[['colorName']]` or `WBCOLORS$colorName`. See `WBCOLORS` for all available colors.
 
 #### Color scales
 
@@ -60,6 +67,12 @@ wbplot comes with 4 color scale functions:
     - `age`: colors for age classes. Matches the levels "youngestAge", "youngerAge", "middleAge", "olderAge" and "oldestAge"
     - `binary`: colors for binary variables. Matches the levels "yes" and "no"
 
+```    
+ggplot(data, aes(..., fill = region_iso3c)) +
+  geom_xyz() +
+  theme_wb() +
+  color_fill_wb_c(palette = "region")
+```
 
 #### add_note_wb()
 
@@ -70,6 +83,26 @@ ggplot(data, aes(...)) +
   geom_xyz() +
   theme_wb() +
   add_note_wb(noteTitle = "Source:", note = "World Bank")
+```
+
+## Bar charts
+
+For (horizontal) bar charts, add `axes_barchart_wb()` to your plot, and set `barChart` to TRUE in `theme_wb()`.
+
+`axes_barchart_wb()` will move the x axis to the top, hide both the horizontal and the vertical grids, and make the categorical labels uppercase. If the data labels for your bars are cut off, you can use the `xExpansion` parameter to create more space on the right side of the plot.
+
+`theme_wb(barChart = TRUE)` will style the axis ticks and axis labels correctly.
+
+```
+ggplot(countries, aes(x = gdp, y = country)) +
+  geom_bar(stat="identity", width = 0.66) +
+  geom_text(aes(label = round(latitude, gdp)), hjust = 0, nudge_x = 0.5) +
+  labs(
+    title = "The biggest economies",
+    subtitle = "Total GDP, 2024, $") +
+  add_note_wb(noteTitle = "Source:", note = "World Bank") +
+  theme_wb(barChart = TRUE) +
+  axes_barchart_wb()
 ```
 
 ## Saving plots

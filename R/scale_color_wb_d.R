@@ -18,7 +18,7 @@ scale_color_wb_d <- function(...,
 
   pal_function <- function(palette){
     function(n){
-      return(head(palette, n))
+      return(head(palette, n + 1))
     }
   }
   makeUpperCase <- function(lowcase){

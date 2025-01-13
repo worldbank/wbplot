@@ -10,6 +10,7 @@
 #' @param addZeroLine Boolean to add a zero line for the Y scale. This will also extend the Y scale to zero
 #' @param hideVerticalGrid Boolean to hide the vertical grid lines (mostly for datetime x axes)
 #' @param hideHorizontalGrid Boolean to hide the horizontal grid lines (mostly for bar charts and beeswarm plots)
+#' @param barChart Boolean to style axes for bar charts (moves to x axis to the top, and capitalizes y axis labels)
 #'
 #' @return None
 #'
@@ -17,11 +18,22 @@
 #' axes_wb(extendYToZero = TRUE, addExpansion = TRUE, addZeroLine = TRUE)
 
 #' @export
-axes_wb <- function(extendYToZero = FALSE, addExpansion = FALSE, addZeroLine = FALSE, hideVerticalGrid = FALSE, hideHorizontalGrid = FALSE) {
+axes_wb <- function(
+    extendYToZero = FALSE,
+    addExpansion = FALSE,
+    addZeroLine = FALSE,
+    hideVerticalGrid = FALSE,
+    hideHorizontalGrid = FALSE
+  ) {
+
+  makeUpperCase <- function(lowcase){
+    return(toupper(lowcase))
+  }
+
   scaleSettings <- list(
     ggplot2::scale_x_continuous(
       # Should the number of ticks be part of the style?
-      breaks = scales::breaks_pretty(5)
+      breaks = scales::breaks_pretty(5),
     ),
     ggplot2::scale_y_continuous(
       limits = if(extendYToZero == TRUE) c(0, NA) else c(NA, NA),
