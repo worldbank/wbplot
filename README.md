@@ -61,9 +61,16 @@ wbplot comes with 4 color scale functions:
     - `binary`: colors for binary variables. Matches the levels "yes" and "no"
 
 
-### add_note_wb.R
+#### add_note_wb()
 
-TODO
+To add a note or source reference at the bottom of your plot, add the `add_note_wb()` to your ggplot. Use the `noteTitle` for the title of the note (which will be displayed in bold), and the `note` parameter for the body of the note.
+
+```
+ggplot(data, aes(...)) +
+  geom_xyz() +
+  theme_wb() +
+  add_note_wb(noteTitle = "Source:", note = "World Bank")
+```
 
 ## Saving plots
 
