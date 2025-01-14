@@ -56,7 +56,7 @@ All World Bank Data Visualization colors are available through the `WBCOLORS` gl
 wbplot comes with 4 color scale functions:
 
 - `scale_color_wb_c`and `scale_fill_wb_c`, for mapping continuous variables to the fill and color aesthetics. The `palette` parameter determines the color palette to use, and should be one of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP' (these are the sequential color palettes), or 'divPosNeg' or 'divLR' (these are the diverging color palettes). The direction of the palette can be reversed by setting `direction = -1`. NA values will be colored in with `WBCOLORS$noData`.
-- `scale_color_wb_d`and `scale_fill_wb_d`, for mapping continuous variables to the fill and color aesthetics. When the `palette` parameter matches the mapped level variable, the levels will be automatically matched to their corresponding colors. The available palettes and their levels are
+- `scale_color_wb_d`and `scale_fill_wb_d`, for mapping discrete variables to the fill and color aesthetics. When the `palette` parameter matches the mapped level variable, the levels will be automatically matched to their corresponding colors. The available palettes and their levels are
     - `default`: the default palette, with 9 distinct colors
     - `defaultText`: darker colors for the `default` palette, to be used for text
     - `region`: colors for regions. Matches the levels "wld", "nac", "lcn", "sas", "mea", "ecs", "eas", "ssf", "afe" and "afw"
@@ -104,6 +104,10 @@ ggplot(countries, aes(x = gdp, y = country)) +
   theme_wb(barChart = TRUE) +
   axes_barchart_wb()
 ```
+
+## Line charts
+
+TODO
 
 ## Saving plots
 

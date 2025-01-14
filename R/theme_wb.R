@@ -31,12 +31,11 @@
 #' @export
 #'
 
-
-
 theme_wb <- function(barChart = FALSE) {
 
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
+  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 1))
 
   # Inventory all font files
   font_files <- sysfonts::font_files()
@@ -90,11 +89,11 @@ theme_wb <- function(barChart = FALSE) {
     ),
     plot.caption.position = "plot",
 
-    axis.title = ggplot2::element_text(
-      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$m,
-      color = get_color(WBSTYLE$axisLabel$color)
-    ),
+    # axis.title = ggplot2::element_text(
+    #   family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
+    #   #size = WBSTYLE$chartLarge$fontSize$m,
+    #   color = get_color(WBSTYLE$axisLabel$color)
+    # ),
     axis.title.y = ggplot2::element_text(
       #margin = ggplot2::margin(0, 5, 0, 0)
     ),
@@ -130,7 +129,7 @@ theme_wb <- function(barChart = FALSE) {
       margin = ggplot2::margin(0, 0, 0, 0)
     ),
     legend.key.height = ggplot2::unit(1, "null"),
-    #legend.key.width = ggplot2::unit(1, "null"),
+    legend.key.width = ggplot2::unit(1, "null"),
     legend.key.spacing.y = ggplot2::unit(0.7, "lines"),
     legend.position = "bottom"
   )
