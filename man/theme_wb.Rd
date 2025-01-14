@@ -4,7 +4,21 @@
 \alias{theme_wb}
 \title{ggplot theme for World Bank visualizations}
 \usage{
-theme_wb()
+theme_wb(
+  chartType = "",
+  xExpansion = 0,
+  addXZeroLine = FALSE,
+  addYZeroLine = FALSE
+)
+}
+\arguments{
+\item{chartType}{Activates chart specific styling. Should be one of "line", "bar", "beeswarm" or "scatter"}
+
+\item{xExpansion}{Expand the x axis to make room for data labels on bar charts}
+
+\item{addXZeroLine}{Boolean for adding a line for zero on the X axis}
+
+\item{addYZeroLine}{Boolean for adding a line for zero on the Y axis}
 }
 \value{
 None

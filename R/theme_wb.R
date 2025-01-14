@@ -2,7 +2,10 @@
 #'
 #' Creates overrides for a ggplot theme, using the World Bank data visualization style
 #'
-#' @param barChart Boolean to indicate this is a bar chart
+#' @param chartType Activates chart specific styling. Should be one of "line", "bar", "beeswarm" or "scatter"
+#' @param xExpansion Expand the x axis to make room for data labels on bar charts
+#' @param addXZeroLine Boolean for adding a line for zero on the X axis
+#' @param addYZeroLine Boolean for adding a line for zero on the Y axis
 #'
 #' @return None
 #'
@@ -31,7 +34,11 @@
 #' @export
 #'
 
-theme_wb <- function(barChart = FALSE) {
+theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZeroLine = FALSE) {
+
+  makeUpperCase <- function(lowcase){
+    return(toupper(lowcase))
+  }
 
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
@@ -134,7 +141,7 @@ theme_wb <- function(barChart = FALSE) {
     legend.position = "bottom"
   )
 
-  if(barChart == TRUE){
+  if(chartType == "bar"){
     theme_custom <- theme_custom + ggplot2::theme(
       axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
       axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
@@ -147,6 +154,115 @@ theme_wb <- function(barChart = FALSE) {
         color = WBCOLORS$lightText,
       )
     )
+    theme_custom <- list(
+      theme_custom,
+      ggplot2::scale_x_continuous(
+        # Should the number of ticks be part of the style?
+        breaks = scales::breaks_pretty(5),
+        position = 'top',
+        expand = ggplot2::expansion(add = c(0,xExpansion))
+      ),
+      ggplot2::scale_y_discrete(
+        labels = makeUpperCase,
+      ),
+      ggplot2::coord_cartesian(
+        clip = 'off'
+      ),
+      ggplot2::theme(
+        panel.grid.major.x = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank()
+      )
+    )
+  }
+
+  if(chartType == "beeswarm"){
+    theme_custom <- theme_custom + ggplot2::theme(
+      axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
+      axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_text(
+        color = WBCOLORS$darkText,
+        family = "Open Sans 600"
+      ),
+      axis.text.x = ggplot2::element_text(
+        color = WBCOLORS$lightText,
+      )
+    )
+    theme_custom <- list(
+      theme_custom,
+      ggplot2::scale_x_continuous(
+        # Should the number of ticks be part of the style?
+        breaks = scales::breaks_pretty(5),
+        #position = 'top',
+        expand = ggplot2::expansion(add = c(0,xExpansion))
+      ),
+      ggplot2::scale_y_discrete(
+        labels = makeUpperCase,
+      ),
+      ggplot2::coord_cartesian(
+        clip = 'off'
+      ),
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_blank()
+      )
+    )
+    if(addXZeroLine){
+      theme_custom <- list(
+        theme_custom,
+        ggplot2::geom_vline(
+          xintercept = 0,
+          color = get_color(WBSTYLE$zeroLine$color),
+          linewidth = WBSTYLE$zeroLine$lineWidth/3
+        )
+      )
+    }
+  }
+  if(chartType == "line"){
+    theme_custom <- theme_custom + ggplot2::theme(
+      axis.title.x = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank()
+    )
+    theme_custom <- list(
+      theme_custom,
+      ggplot2::coord_cartesian(
+        expand = FALSE,
+        clip = 'off'
+      )
+    )
+    if(addYZeroLine){
+      theme_custom <- list(
+        theme_custom,
+        ggplot2::geom_hline(
+          yintercept = 0,
+          color = get_color(WBSTYLE$zeroLine$color),
+          linewidth = WBSTYLE$zeroLine$lineWidth/3
+        )
+      )
+    }
+  }
+
+  if(chartType == "scatter"){
+    if(addYZeroLine){
+      theme_custom <- list(
+        theme_custom,
+        ggplot2::geom_hline(
+          yintercept = 0,
+          color = get_color(WBSTYLE$zeroLine$color),
+          linewidth = WBSTYLE$zeroLine$lineWidth/3
+        )
+      )
+    }
+    if(addXZeroLine){
+      theme_custom <- list(
+        theme_custom,
+        ggplot2::geom_vline(
+          xintercept = 0,
+          color = get_color(WBSTYLE$zeroLine$color),
+          linewidth = WBSTYLE$zeroLine$lineWidth/3
+        )
+      )
+    }
   }
 
   theme_custom
