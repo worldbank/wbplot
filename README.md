@@ -26,22 +26,28 @@ ggplot(data, aes(...)) +
   geom_xyz()
 ```
 
-The theme has some specific styling for certain chart type.
+The theme has some specific styling for certain chart types.
 
-With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `showYAxisTitle = TRUE`.
+With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
 
 ```
-ggplot(data, aes(x = date, y = value)) +
+lifexp <- dplyr::filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU", "RUS", "IDN", "JPN"))
+
+ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
   theme_wb(chartType = "line", addYAxisTitle = TRUE) +
+  geom_line(data = life.expectancy, linejoin = "round", lineend = "round", color = WBCOLORS$darkest, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
   geom_line(linejoin = "round", lineend = "round") +
+  ylab("Life expectancy at birth, total (years)") +
   ggtitle("Your chart title", subtitle = "This is the subtitle")
 ```
 
-With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `showXAxisTitle = TRUE`.
+With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
 
 The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()`. If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
 
 ```
+
+
 ggplot(data, aes(x = value, y = country)) +
   theme_wb(chartType = "bar", xExpansion = 10) +
   geom_bar(stat="identity", width = 0.66) +
@@ -102,7 +108,7 @@ ggplot(data, aes(..., fill = region_iso3c)) +
   color_fill_wb_c(palette = "region")
 ```
 
-#### add_note_wb()
+### add_note_wb()
 
 To add a note or source reference at the bottom of your plot, add the `add_note_wb()` to your ggplot. Use the `noteTitle` for the title of the note (which will be displayed in bold), and the `note` parameter for the body of the note.
 
@@ -112,6 +118,13 @@ ggplot(data, aes(...)) +
   theme_wb() +
   add_note_wb(noteTitle = "Source:", note = "World Bank")
 ```
+
+### Data
+
+The package comes with 2 data sets:
+
+- `countries`: available countries and regions from the World Bank API, as returned by `wbstats::wbcountries`
+- `life.expectancy`: time series data for the SP.DYN.LE00.IN indicator for all countries and regions, as returned by `wbstats::wb_data("SP.DYN.LE00.IN")`
 
 ## Saving plots
 

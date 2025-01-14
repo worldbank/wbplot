@@ -6,8 +6,8 @@
 #' @param xExpansion Expand the x axis to make room for data labels on bar charts
 #' @param addXZeroLine Boolean for adding a line for zero on the X axis
 #' @param addYZeroLine Boolean for adding a line for zero on the Y axis
-#' @param showYAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
-#' @param showXAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
+#' @param addYAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
+#' @param addXAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
 #'
 #' @return None
 #'
@@ -38,14 +38,15 @@ theme_wb <- function(
     xExpansion = 0,
     addXZeroLine = FALSE,
     addYZeroLine = FALSE,
-    showYAxisTitle = FALSE,
-    showXAxisTitle = FALSE
+    addYAxisTitle = FALSE,
+    addXAxisTitle = FALSE
     ) {
 
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
   }
 
+  options(ggplot2.discrete.colour = WBPALETTES$default)
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 1))
@@ -101,11 +102,11 @@ theme_wb <- function(
     ),
     plot.caption.position = "plot",
 
-    # axis.title = ggplot2::element_text(
-    #   family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
-    #   #size = WBSTYLE$chartLarge$fontSize$m,
-    #   color = get_color(WBSTYLE$axisLabel$color)
-    # ),
+    axis.title = ggplot2::element_text(
+      family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
+      #size = WBSTYLE$chartLarge$fontSize$m,
+      color = get_color(WBSTYLE$axisLabel$color)
+    ),
     axis.title.y = ggplot2::element_text(
       #margin = ggplot2::margin(0, 5, 0, 0)
     ),
@@ -153,12 +154,14 @@ theme_wb <- function(
       axis.ticks.y = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_text(
         color = WBCOLORS$darkText,
-        family = "Open Sans 600"
+        family = "Open Sans 600",
+        hjust = 0
       ),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
       ),
-      axis.title.x = if(showXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+      axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+      axis.title.y = element_blank()
     )
     theme_custom <- list(
       theme_custom,
@@ -193,7 +196,7 @@ theme_wb <- function(
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
       ),
-      axis.title.x = if(showXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+      axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
     )
     theme_custom <- list(
       theme_custom,
@@ -227,7 +230,7 @@ theme_wb <- function(
   if(chartType == "line"){
     theme_custom <- theme_custom + ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
-      axis.title.y = if(showYAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+      axis.title.y = if(addYAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
       panel.grid.major.x = ggplot2::element_blank()
     )
     theme_custom <- list(
