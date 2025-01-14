@@ -6,6 +6,8 @@
 #' @param xExpansion Expand the x axis to make room for data labels on bar charts
 #' @param addXZeroLine Boolean for adding a line for zero on the X axis
 #' @param addYZeroLine Boolean for adding a line for zero on the Y axis
+#' @param showYAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
+#' @param showXAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
 #'
 #' @return None
 #'
@@ -26,15 +28,19 @@
 # [] All the spacing: line heights, ggsave::scale, ...
 # [] Chart type specific styling
 # [] Logo?
+# [] geom specific, non-aesthetic defaults (bar width, linejoin, linecap)
 #
-# Questions:
-# - number of breaks
-# - date formatting
-# - scale expansion
 #' @export
 #'
 
-theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZeroLine = FALSE) {
+theme_wb <- function(
+    chartType = "",
+    xExpansion = 0,
+    addXZeroLine = FALSE,
+    addYZeroLine = FALSE,
+    showYAxisTitle = FALSE,
+    showXAxisTitle = FALSE
+    ) {
 
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
@@ -55,7 +61,6 @@ theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZ
         regular.wt = weight
       )
     }
-
   }
 
   showtext::showtext_opts(dpi = 300)
@@ -152,7 +157,8 @@ theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZ
       ),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
-      )
+      ),
+      axis.title.x = if(showXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
     )
     theme_custom <- list(
       theme_custom,
@@ -186,7 +192,8 @@ theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZ
       ),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
-      )
+      ),
+      axis.title.x = if(showXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
     )
     theme_custom <- list(
       theme_custom,
@@ -220,7 +227,7 @@ theme_wb <- function(chartType = "", xExpansion = 0, addXZeroLine = FALSE, addYZ
   if(chartType == "line"){
     theme_custom <- theme_custom + ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
-      axis.title.y = ggplot2::element_blank(),
+      axis.title.y = if(showYAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
       panel.grid.major.x = ggplot2::element_blank()
     )
     theme_custom <- list(

@@ -22,28 +22,56 @@ When the package is installed, load it into your R session with `library(wbplot)
 
 ```
 ggplot(data, aes(...)) +
-  geom_xyz() +
-  theme_wb()
-```
-
-This will style the plot according to the World Bank Data Visualization Style Guide.
-
-### axes_wb()
-
-Add the `axes_wb()` function to a ggplot object after adding `theme_wb()` to it, to configure some axis options. The available parameters are
-
-- `extendYToZero`: make the y scale extend to zero. Default is FALSE.
-- `addZeroLine`: add a horizontal line to mark the zero value on the y axis. When added, the y axis will be extended to zero to include the zero line, even if `extendYToZero` is FALSE. Default is FALSE.
-- `addExpansion`: expand the x and y scale to create some margins around the data. ggplot adds this by default, but here the default is FALSE.
-- `hideVerticalGrid`: hide the vertical grid lines. Should be true for date/time scales. Default is FALSE.
-- `hideHorizontalGrid`: hide the horizontal grid lines. Should be true for bar charts and beeswarm plots. Default is FALSE.
-
-```
-ggplot(data, aes(...)) +
-  geom_xyz() +
   theme_wb() +
-  axis_wb(extendYToZero = TRUE, addZeroLine = FALSE, addExpansion = TRUE, hideVerticalGrid = TRUE, hideHorizontalGrid = FALSE)
+  geom_xyz()
 ```
+
+The theme has some specific styling for certain chart type.
+
+With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `showYAxisTitle = TRUE`.
+
+```
+ggplot(data, aes(x = date, y = value)) +
+  theme_wb(chartType = "line", addYAxisTitle = TRUE) +
+  geom_line(linejoin = "round", lineend = "round") +
+  ggtitle("Your chart title", subtitle = "This is the subtitle")
+```
+
+With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `showXAxisTitle = TRUE`.
+
+The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()`. If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
+
+```
+ggplot(data, aes(x = value, y = country)) +
+  theme_wb(chartType = "bar", xExpansion = 10) +
+  geom_bar(stat="identity", width = 0.66) +
+  geom_text(aes(label = round(latitude, 1)), hjust = 0, nudge_x = 0.5) +
+  ggtitle("Your chart title", subtitle = "This is the subtitle")
+```
+
+With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can show the X axis title with `showXAxisTitle = TRUE`.
+
+```
+ggplot(data, aes(x = value, y = income_level_iso3c)) +
+  theme_wb(chartType = "beeswarm", showXAxisTitle = TRUE) +
+  ggbeeswarm::geom_beeswarm(
+    cex = 2.5,
+    method = "swarm",
+    priority = "random",
+    size = 3) +
+  ggtitle("Your chart title", subtitle = "This is the subtitle")
+```
+
+With `chartType = "scatter"`, the plot is only styled, but no chart elements are removed. The default shape for `geom_point()` is changed to a filled circle with a white outline.
+
+```
+ggplot(data, aes(x = value, y = value2, fill = income_level_iso3c)) +
+  theme_wb(chartType = "scatter") +
+  geom_point() +
+  ggtitle("Your chart title", subtitle = "This is the subtitle")
+```
+
+For all continuous axes (X axis for `bar`, `beeswarm` and `scatter`, Y axis for `line` and `scatter`), you can add a line indicating the zero value with `addXZeroLine = TRUE` or `addYZeroLine == TRUE`. When zero is not included on the axis initially, the axis will extend up until the zero value. 
 
 ### Colors
 
@@ -84,30 +112,6 @@ ggplot(data, aes(...)) +
   theme_wb() +
   add_note_wb(noteTitle = "Source:", note = "World Bank")
 ```
-
-## Bar charts
-
-For (horizontal) bar charts, add `axes_barchart_wb()` to your plot, and set `barChart` to TRUE in `theme_wb()`.
-
-`axes_barchart_wb()` will move the x axis to the top, hide both the horizontal and the vertical grids, and make the categorical labels uppercase. If the data labels for your bars are cut off, you can use the `xExpansion` parameter to create more space on the right side of the plot.
-
-`theme_wb(barChart = TRUE)` will style the axis ticks and axis labels correctly.
-
-```
-ggplot(countries, aes(x = gdp, y = country)) +
-  geom_bar(stat="identity", width = 0.66) +
-  geom_text(aes(label = round(latitude, gdp)), hjust = 0, nudge_x = 0.5) +
-  labs(
-    title = "The biggest economies",
-    subtitle = "Total GDP, 2024, $") +
-  add_note_wb(noteTitle = "Source:", note = "World Bank") +
-  theme_wb(barChart = TRUE) +
-  axes_barchart_wb()
-```
-
-## Line charts
-
-TODO
 
 ## Saving plots
 
