@@ -1,28 +1,26 @@
-#' Continuous colour scales with WB palettes
+#' Binned fill scales with WB palettes
 #'
 #'
 #' @param palette The WB color palette to use. One of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', or 'divLR'
-#' @param direction Sets the order of colors in the scale. 1 is the default, if -1, the order of colors is reversed
 #' @param na.value Color to use for NA values
-#' @param ... Other arguments passed to scale_colour_continuous()
+#' @param ... Other arguments passed to scale_fill_binned()
 #'
 #' @return None
 #'
 #' @examples
-#' scale_color_wb_c(palette = "seq")
+#' scale_fill_binned_wb(palette = "seq", n.breaks = 8)
 #'
 #' @export
 
-scale_color_wb_c <- function(...,
-                               palette = "seq",
-                               direction = 1,
-                               na.value = WBCOLORS[["noData"]]) {
+scale_fill_binned_wb <- function(...,
+                            palette = "seq",
+                            na.value = WBCOLORS[["noData"]]) {
 
   if(palette %in% c('seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', 'divLR')){
     pal <- WBPALETTES[[palette]]
 
-    ggplot2::continuous_scale(
-      aesthetics = "colour",
+    ggplot2::binned_scale(
+      aesthetics = "fill",
       palette = scales::gradient_n_pal(pal),
       na.value = na.value,
       guide = ggplot2::guide_colourbar(
@@ -37,7 +35,6 @@ scale_color_wb_c <- function(...,
             margin = ggplot2::margin(0, 0, 4, 0)),
           legend.key.width = ggplot2::unit(1, "null")
         ),
-
       ),
       ...
     )

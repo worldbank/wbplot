@@ -33,7 +33,7 @@ scale_color_wb_d <- function(...,
       palette = pal_function(pal),
       na.value = na.value,
       labels = makeUpperCase,
-      guide = guide_legend(nrow = 1),
+      guide = ggplot2::guide_legend(nrow = 1),
       ...
     )
   } else {

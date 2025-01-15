@@ -25,14 +25,14 @@ scale_fill_wb_c <- function(...,
       aesthetics = "fill",
       palette = scales::gradient_n_pal(pal),
       na.value = na.value,
-      guide = guide_colourbar(
-        theme = theme(
-          legend.key.height = unit(0.5, "lines"),
-          legend.frame = element_rect(colour = WBCOLORS$middle, linewidth = 0.25),
+      guide = ggplot2::guide_colourbar(
+        theme = ggplot2::theme(
+          legend.key.height = ggplot2::unit(0.5, "lines"),
+          legend.frame = ggplot2::element_rect(colour = WBCOLORS$middle, linewidth = 0.25),
           legend.text.position = "top",
-          legend.ticks = element_line(colour = WBCOLORS$middle, linewidth = 0.25),
-          legend.ticks.length = unit(0.5, "lines"),
-          legend.text = element_text(
+          legend.ticks = ggplot2::element_line(colour = WBCOLORS$middle, linewidth = 0.25),
+          legend.ticks.length = ggplot2::unit(0.5, "lines"),
+          legend.text = ggplot2::element_text(
             color = WBCOLORS$lightText,
             margin = ggplot2::margin(0, 0, 4, 0)),
           legend.key.width = ggplot2::unit(1, "null")
