@@ -86,7 +86,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolowe
 
 Here is an example of single beeswarm, created with a dummy y aesthetic:
 
-````
+```
 ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_level_iso3c))) +
   ggbeeswarm::geom_beeswarm(
     cex = 4,
