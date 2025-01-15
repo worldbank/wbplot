@@ -183,7 +183,6 @@ You can save plots with `ggsave()`. You should be able to get good results by se
 
 ```
 ggsave(filename = "my-worldbank-chart.png", units = "px", width = 960, height = 540, scale = 2)
-
 ```
 
 For convenience, you can use `ggsave_wb(filename = "my-worldbank-chart.png")`, which has these values for units, dimensions and scale by default.

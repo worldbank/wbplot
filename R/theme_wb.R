@@ -75,6 +75,7 @@ theme_wb <- function(
   showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
 
+  theme_custom <- ggplot2::theme_minimal(base_size = baseSize)
   theme_custom <- ggplot2::theme_minimal(base_size = baseSize) +
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
@@ -141,18 +142,22 @@ theme_wb <- function(
     legend.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$legendTitle$weight)),
       #size = WBSTYLE$chartLarge$fontSize$s,
-      color = get_color(WBSTYLE$legendTitle$color)
+      color = get_color(WBSTYLE$legendTitle$color),
+      hjust = 0,
+      margin = ggplot2::margin(0,0,0,0)
     ),
+    legend.title.position = "top",
+    legend.location = "plot",
     legend.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
       #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$categoryLabel$color),
       margin = ggplot2::margin(0, 0, 0, 0)
     ),
-    legend.key.height = ggplot2::unit(1, "null"),
-    #legend.key.width = ggplot2::unit(1, "null"),
     legend.key.spacing.y = ggplot2::unit(0.7, "lines"),
-    legend.position = "bottom"
+    legend.position = "bottom",
+    legend.justification.bottom = "left",
+    legend.margin = ggplot2::margin(0,0,4,0)
   )
 
   if(chartType == "bar"){
@@ -189,10 +194,6 @@ theme_wb <- function(
         panel.grid.major.x = ggplot2::element_blank(),
         panel.grid.major.y = ggplot2::element_blank()
       ),
-      ggplot2::guides(
-        fill = ggplot2::guide_legend(nrow = 1),
-        color = ggplot2::guide_legend(nrow = 1)
-      )
     )
   }
 
@@ -227,10 +228,6 @@ theme_wb <- function(
       ),
       ggplot2::theme(
         panel.grid.major.y = ggplot2::element_blank()
-      ),
-      ggplot2::guides(
-        fill = ggplot2::guide_legend(nrow = 1),
-        color = ggplot2::guide_legend(nrow = 1)
       )
     )
     if(addXZeroLine){
@@ -255,10 +252,6 @@ theme_wb <- function(
       ggplot2::coord_cartesian(
         expand = FALSE,
         clip = 'off'
-      ),
-      ggplot2::guides(
-        fill = ggplot2::guide_legend(nrow = 1),
-        color = ggplot2::guide_legend(nrow = 1)
       )
     )
     if(addYZeroLine){
@@ -294,13 +287,6 @@ theme_wb <- function(
         )
       )
     }
-    theme_custom <- list(
-      theme_custom,
-      ggplot2::guides(
-        fill = ggplot2::guide_legend(nrow = 1),
-        color = ggplot2::guide_legend(nrow = 1)
-      )
-    )
   }
 
   theme_custom
