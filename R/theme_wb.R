@@ -3,11 +3,11 @@
 #' Creates overrides for a ggplot theme, using the World Bank data visualization style
 #'
 #' @param chartType Activates chart specific styling. Should be one of "line", "bar", "beeswarm" or "scatter"
-#' @param xExpansion Expand the x axis to make room for data labels on bar charts
-#' @param addXZeroLine Boolean for adding a line for zero on the X axis
-#' @param addYZeroLine Boolean for adding a line for zero on the Y axis
-#' @param addYAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
-#' @param addXAxisTitle Boolean for overruling the hiding of the Y axis title on line charts
+#' @param xExpansion Expand the x axis to make room for data labels on bar and beeswarm charts
+#' @param addXZeroLine Boolean for adding a line for zero on continuous X axes
+#' @param addYZeroLine Boolean for adding a line for zero on continous Y axes
+#' @param addYAxisTitle Boolean for overruling the hiding of the Y axis title of line charts
+#' @param addXAxisTitle Boolean for overruling the hiding of the Y axis title of bar and beeswarm charts
 #'
 #' @return None
 #'
@@ -49,6 +49,7 @@ theme_wb <- function(
   baseSize <- 11
 
   options(ggplot2.discrete.colour = WBPALETTES$default)
+  options(ggplot2.continuous.colour = WBPALETTES$seq)
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))

@@ -30,6 +30,8 @@ The theme has some specific styling for certain chart types.
 
 With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
 
+For line charts, the x aesthetic should be mapped to a date variable, and the y aesthetic to a numerical variable.
+
 ```
 lifexp <- dplyr::filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU", "RUS", "IDN", "JPN"))
 
@@ -45,6 +47,8 @@ ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
 ![A line chart showing country life expectancy time series](images/line.png)
 
 With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
+
+For bar charts, the x aesthetic should be mapped to a numerical variable, and the y aesthetic to a discrete variable.
 
 The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()` (the default font size, font family, color and alignment (hjust) of `geom_text()` are modified by the theme). If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
 
@@ -64,6 +68,8 @@ ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
 With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can add the X axis title with `addXAxisTitle = TRUE`, and expand the X axis with `xExpansion`.
 
 To generate beeswarm plots with ggplot2, you can install the `ggbeeswarm` package, which offers the `geom_beeswarm()` geometry.
+
+For beeswarm charts, the x aesthetic should be mapped to a numerical variable, and the y aesthetic to a discrete variable.
 
 ```
 lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
@@ -109,6 +115,8 @@ With `chartType = "scatter"`, the plot is only styled, but no chart elements are
 
 The default shape for `geom_point()` is modified by the theme to a filled circle with a white outline.
 
+For scatter plots, both the x and the y aesthetic should be mapped to a numerical variable.
+
 ```
 ggplot(countries, aes(longitude, latitude, fill = tolower(income_level_iso3c))) +
   theme_wb(chartType = "scatter") +
@@ -134,9 +142,10 @@ All World Bank Data Visualization colors are available through the `WBCOLORS` gl
 
 #### Color scales
 
-wbplot comes with 4 color scale functions:
+wbplot comes with 6 color scale functions:
 
 - `scale_color_wb_c`and `scale_fill_wb_c`, for mapping continuous variables to the fill and color aesthetics. The `palette` parameter determines the color palette to use, and should be one of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP' (these are the sequential color palettes), or 'divPosNeg' or 'divLR' (these are the diverging color palettes). The direction of the palette can be reversed by setting `direction = -1`. NA values will be colored in with `WBCOLORS$noData`.
+- `scale_color_binned_wb`and `scale_fill_binned_wb` are the binned equivalents of `scale_color_wb_c`and `scale_fill_wb_c`. They share the same palettes, the number of bins can be set with `n.breaks`.
 - `scale_color_wb_d`and `scale_fill_wb_d`, for mapping discrete variables to the fill and color aesthetics. When the `palette` parameter matches the mapped level variable, the levels will be automatically matched to their corresponding colors. The available palettes and their levels are
     - `default`: the default palette, with 9 distinct colors
     - `defaultText`: darker colors for the `default` palette, to be used for text
@@ -172,10 +181,6 @@ The package comes with 2 data sets:
 
 - `countries`: available countries and regions from the World Bank API, as returned by `wbstats::wbcountries`
 - `life.expectancy`: time series data for the SP.DYN.LE00.IN indicator for all countries and regions, as returned by `wbstats::wb_data("SP.DYN.LE00.IN")`
-
-### Legends
-
-TODO
 
 ## Saving plots
 
