@@ -51,10 +51,10 @@ theme_wb <- function(
   options(ggplot2.discrete.colour = WBPALETTES$default)
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
-  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 1))
+  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
   ggplot2::update_geom_defaults("text", ggplot2::aes(
     hjust = 0,
-    size = baseSize/ggplot2::.pt,
+    size = baseSize*0.8/ggplot2::.pt,
     color = WBCOLORS$darkText,
     family = "Open Sans 600")
   )
@@ -169,7 +169,7 @@ theme_wb <- function(
         color = WBCOLORS$lightText,
       ),
       axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
-      axis.title.y = element_blank()
+      axis.title.y = ggplot2::element_blank()
     )
     theme_custom <- list(
       theme_custom,
@@ -205,12 +205,12 @@ theme_wb <- function(
         color = WBCOLORS$darkText,
         family = "Open Sans 600",
         hjust = 0,
-        margin = margin(0,0,0,0)
+        margin = ggplot2::margin(0,0,0,0)
       ),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
       ),
-      axis.title.y = element_blank(),
+      axis.title.y = ggplot2::element_blank(),
       axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
     )
     theme_custom <- list(
