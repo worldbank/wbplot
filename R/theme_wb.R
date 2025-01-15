@@ -42,6 +42,11 @@ theme_wb <- function(
     addXAxisTitle = FALSE
     ) {
 
+  if(addXZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
+  if(addYZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
+  if(addYZeroLine & chartType == "beeswarm") warning("Zero lines can't be added discrete scales")
+  if(addXZeroLine & chartType == "line") warning("Zero lines can't be added to date/time scales")
+
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
   }
@@ -194,7 +199,7 @@ theme_wb <- function(
       ggplot2::theme(
         panel.grid.major.x = ggplot2::element_blank(),
         panel.grid.major.y = ggplot2::element_blank()
-      ),
+      )
     )
   }
 

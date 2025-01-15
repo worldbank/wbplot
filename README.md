@@ -39,9 +39,9 @@ ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
   theme_wb(chartType = "line") +
   geom_line(data = life.expectancy, linejoin = "round", lineend = "round", color = WBCOLORS$darkest, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
   geom_line(linejoin = "round", lineend = "round") +
-  ylab("Life expectancy at birth, total (years)") +
-  ggtitle("Your chart title", subtitle = "This is the subtitle") +
-  theme(legend.title = element_blank())
+  ggtitle("Your chart title", subtitle = "Life expectancy at birth, total (years)") +
+  theme(legend.title = element_blank()) +
+  scale_color_wb_d()
 ```
 
 ![A line chart showing country life expectancy time series](images/line.png)
@@ -50,7 +50,7 @@ With `chartType = "bar"`, both vertical and horizontal grid lines are removed, t
 
 For bar charts, the x aesthetic should be mapped to a numerical variable, and the y aesthetic to a discrete variable.
 
-The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()` (the default font size, font family, color and alignment (hjust) of `geom_text()` are modified by the theme). If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
+The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()` (the default font size, font family, color and alignment (hjust) of `geom_text()` are modified by the theme). If some of the labels are cut off, you can add margin the right of the chart with `xExpansion`.
 
 ```
 country.latitudes <- head(dplyr::arrange(countries.edited, desc(latitude)),10)
