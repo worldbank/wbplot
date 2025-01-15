@@ -43,47 +43,81 @@ ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
 
 With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
 
-The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()`. If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
+The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()` (the default font size, font family, color and alignment (hjust) of `geom_text()` are modified by the theme). If some of the labels are cut off, you can add more space on the right of the chart with `xExpansion`.
 
 ```
+country.latitudes <- head(dplyr::arrange(countries.edited, desc(latitude)),10)
 
-
-ggplot(data, aes(x = value, y = country)) +
+ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
   theme_wb(chartType = "bar", xExpansion = 10) +
   geom_bar(stat="identity", width = 0.66) +
-  geom_text(aes(label = round(latitude, 1)), hjust = 0, nudge_x = 0.5) +
+  geom_text(aes(label = round(latitude, 1)), nudge_x = 0.7) +
   ggtitle("Your chart title", subtitle = "This is the subtitle")
 ```
 
-With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can show the X axis title with `showXAxisTitle = TRUE`.
+With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can add the X axis title with `addXAxisTitle = TRUE`, and expand the X axis with `xExpansion`.
+
+To generate beeswarm plots with ggplot2, you can install the `ggbeeswarm` package, which offers the `geom_beeswarm()` geometry.
 
 ```
-ggplot(data, aes(x = value, y = income_level_iso3c)) +
-  theme_wb(chartType = "beeswarm", showXAxisTitle = TRUE) +
+lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
+  left_join(countries, by = "iso3c")
+
+ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +
   ggbeeswarm::geom_beeswarm(
     cex = 2.5,
     method = "swarm",
     priority = "random",
-    size = 3) +
-  ggtitle("Your chart title", subtitle = "This is the subtitle")
+    size = 3
+  ) +
+  ggtitle("This is the beeswarm title", subtitle = "Life expectancy by income group") +
+  theme_wb(chartType = "beeswarm") +
+  scale_fill_wb_d(palette = "income") +
+  theme(legend.position = "none")
 ```
 
-With `chartType = "scatter"`, the plot is only styled, but no chart elements are removed. The default shape for `geom_point()` is changed to a filled circle with a white outline.
+Here is an example of single beeswarm, created with a dummy y aesthetic:
+
+````
+ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_level_iso3c))) +
+  ggbeeswarm::geom_beeswarm(
+    cex = 3,
+    method = "compactswarm",
+    priority = "random",
+    size = 3
+  ) +
+  ggtitle("This is the beeswarm title", subtitle = "Life expectancy by income group") +
+  theme_wb(chartType = "beeswarm") +
+  scale_fill_wb_d(palette = "income") +
+  theme(
+    legend.title = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+With `chartType = "scatter"`, the plot is only styled, but no chart elements are removed (so `theme_wb()` has the same effect as `theme_wb(chartType = "scatter")`.
+
+The default shape for `geom_point()` is modified by the theme to a filled circle with a white outline.
 
 ```
-ggplot(data, aes(x = value, y = value2, fill = income_level_iso3c)) +
-  theme_wb(chartType = "scatter") +
+ggplot(countries, aes(longitude, latitude, fill = tolower(income_level_iso3c))) +
+  theme_wb(type = "scatter") +
   geom_point() +
-  ggtitle("Your chart title", subtitle = "This is the subtitle")
+  labs(
+    title = "Scatterplot between x and y",
+    subtitle = "This is the subtitle") +
+  ylab("Latitude") +
+  xlab("Longitude") +
+  scale_fill_wb_d(palette = "income")
 ```
 
-For all continuous axes (X axis for `bar`, `beeswarm` and `scatter`, Y axis for `line` and `scatter`), you can add a line indicating the zero value with `addXZeroLine = TRUE` or `addYZeroLine == TRUE`. When zero is not included on the axis initially, the axis will extend up until the zero value. 
+For all continuous axes (X axis for `bar`, `beeswarm` and `scatter`, Y axis for `line` and `scatter`), you can add a line indicating the zero value with `addXZeroLine = TRUE` or `addYZeroLine == TRUE`. When zero is not included on the axis initially, the axis will extend up until the zero value when a zero value line is added.
 
 ### Colors
 
 #### All colors
 
-All World Bank Data Visualization colors are available through the `WBCOLORS` global variables. Access the colors with `WBCOLORS[['colorName']]` or `WBCOLORS$colorName`. See `WBCOLORS` for all available colors.
+All World Bank Data Visualization colors are available through the `WBCOLORS` global variable. Access the colors with `WBCOLORS[['colorName']]` or `WBCOLORS$colorName`. See `WBCOLORS` for all available colors.
 
 #### Color scales
 

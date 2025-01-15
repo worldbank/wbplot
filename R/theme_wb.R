@@ -46,10 +46,18 @@ theme_wb <- function(
     return(toupper(lowcase))
   }
 
+  baseSize <- 11
+
   options(ggplot2.discrete.colour = WBPALETTES$default)
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 1))
+  ggplot2::update_geom_defaults("text", ggplot2::aes(
+    hjust = 0,
+    size = baseSize/ggplot2::.pt,
+    color = WBCOLORS$darkText,
+    family = "Open Sans 600")
+  )
 
   # Inventory all font files
   font_files <- sysfonts::font_files()
@@ -67,7 +75,7 @@ theme_wb <- function(
   showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
 
-  theme_custom <- ggplot2::theme_minimal(base_size = 11) +
+  theme_custom <- ggplot2::theme_minimal(base_size = baseSize) +
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
@@ -142,7 +150,7 @@ theme_wb <- function(
       margin = ggplot2::margin(0, 0, 0, 0)
     ),
     legend.key.height = ggplot2::unit(1, "null"),
-    legend.key.width = ggplot2::unit(1, "null"),
+    #legend.key.width = ggplot2::unit(1, "null"),
     legend.key.spacing.y = ggplot2::unit(0.7, "lines"),
     legend.position = "bottom"
   )
@@ -180,6 +188,10 @@ theme_wb <- function(
       ggplot2::theme(
         panel.grid.major.x = ggplot2::element_blank(),
         panel.grid.major.y = ggplot2::element_blank()
+      ),
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(nrow = 1),
+        color = ggplot2::guide_legend(nrow = 1)
       )
     )
   }
@@ -191,19 +203,20 @@ theme_wb <- function(
       axis.ticks.y = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_text(
         color = WBCOLORS$darkText,
-        family = "Open Sans 600"
+        family = "Open Sans 600",
+        hjust = 0,
+        margin = margin(0,0,0,0)
       ),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
       ),
+      axis.title.y = element_blank(),
       axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
     )
     theme_custom <- list(
       theme_custom,
       ggplot2::scale_x_continuous(
-        # Should the number of ticks be part of the style?
         breaks = scales::breaks_pretty(5),
-        #position = 'top',
         expand = ggplot2::expansion(add = c(0,xExpansion))
       ),
       ggplot2::scale_y_discrete(
@@ -214,6 +227,10 @@ theme_wb <- function(
       ),
       ggplot2::theme(
         panel.grid.major.y = ggplot2::element_blank()
+      ),
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(nrow = 1),
+        color = ggplot2::guide_legend(nrow = 1)
       )
     )
     if(addXZeroLine){
@@ -238,6 +255,10 @@ theme_wb <- function(
       ggplot2::coord_cartesian(
         expand = FALSE,
         clip = 'off'
+      ),
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(nrow = 1),
+        color = ggplot2::guide_legend(nrow = 1)
       )
     )
     if(addYZeroLine){
@@ -273,6 +294,13 @@ theme_wb <- function(
         )
       )
     }
+    theme_custom <- list(
+      theme_custom,
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(nrow = 1),
+        color = ggplot2::guide_legend(nrow = 1)
+      )
+    )
   }
 
   theme_custom

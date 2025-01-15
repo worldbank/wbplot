@@ -132,14 +132,14 @@ discretePalettesValues[['regionText']] <- regionTextPalette
 
 incomePalette <- c(
   WBCOLORS$hic,
-  WBCOLORS$umic,
-  WBCOLORS$lmic,
+  WBCOLORS$umc,
+  WBCOLORS$lmc,
   WBCOLORS$lic
 )
 names(incomePalette) <- c(
   "hic",
-  "umic",
-  "lmic",
+  "umc",
+  "lmc",
   "lic"
 )
 discretePalettesValues[['income']] <- incomePalette

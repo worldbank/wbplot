@@ -8,7 +8,9 @@ theme_wb(
   chartType = "",
   xExpansion = 0,
   addXZeroLine = FALSE,
-  addYZeroLine = FALSE
+  addYZeroLine = FALSE,
+  addYAxisTitle = FALSE,
+  addXAxisTitle = FALSE
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ theme_wb(
 \item{addXZeroLine}{Boolean for adding a line for zero on the X axis}
 
 \item{addYZeroLine}{Boolean for adding a line for zero on the Y axis}
+
+\item{addYAxisTitle}{Boolean for overruling the hiding of the Y axis title on line charts}
+
+\item{addXAxisTitle}{Boolean for overruling the hiding of the Y axis title on line charts}
 }
 \value{
 None
