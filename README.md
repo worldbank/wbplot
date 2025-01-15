@@ -42,7 +42,7 @@ ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
   theme(legend.title = element_blank())
 ```
 
-![A line chart showing country life expectancy time series](line.png)
+![A line chart showing country life expectancy time series](images/line.png)
 
 With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
 
@@ -59,7 +59,7 @@ ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
   xlab("Latitude (degrees North)")
 ```
 
-![A bar chart showing country latitudes](bar.png)
+![A bar chart showing country latitudes](images/bar.png)
 
 With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can add the X axis title with `addXAxisTitle = TRUE`, and expand the X axis with `xExpansion`.
 
@@ -82,7 +82,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolowe
   theme(legend.position = "none")
 ```
 
-![A beeswarm chart showing country life expectancy in 2022, split by income levels](beeswarm.png)
+![A beeswarm chart showing country life expectancy in 2022, split by income levels](images/beeswarm.png)
 
 Here is an example of single beeswarm, created with a dummy y aesthetic:
 
@@ -103,7 +103,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_le
   )
 ```
 
-![A beeswarm plot showing country life expectancy in 2022](beeswarm-single.png)
+![A beeswarm plot showing country life expectancy in 2022](images/beeswarm-single.png)
 
 With `chartType = "scatter"`, the plot is only styled, but no chart elements are removed (so `theme_wb()` has the same effect as `theme_wb(chartType = "scatter")`.
 
@@ -122,7 +122,7 @@ ggplot(countries, aes(longitude, latitude, fill = tolower(income_level_iso3c))) 
   theme(legend.title = element_blank())
 ```
 
-![A scatter plot of country latitudes versus longitudes](scatter.png)
+![A scatter plot of country latitudes versus longitudes](images/scatter.png)
 
 For all continuous axes (X axis for `bar`, `beeswarm` and `scatter`, Y axis for `line` and `scatter`), you can add a line indicating the zero value with `addXZeroLine = TRUE` or `addYZeroLine == TRUE`. When zero is not included on the axis initially, the axis will extend up until the zero value when a zero value line is added.
 
