@@ -168,26 +168,53 @@ wbplot comes with 6 color scale functions:
     - `binary`: colors for binary variables. Matches the levels "yes" and "no"
 
 ```    
-ggplot(data, aes(..., fill = region_iso3c)) +
-  geom_xyz() +
-  theme_wb() +
-  color_fill_wb_c(palette = "region")
+ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c))) +
+  theme_wb(chartType = "scatter", addYZeroLine = TRUE, addXZeroLine = TRUE) +
+  geom_point() +
+  labs(
+    title = "Scatterplot between x and y",
+    subtitle = "This is the subtitle") +
+  ylab("Latitude") +
+  xlab("Longitude") +
+  scale_fill_wb_d(palette = "region") +
+  theme(legend.title = element_blank())
 ```
 
-TODO: add real examples
+![A scatter plot of country latitudes versus longitudes, with a discrete color scale showing the region each country belongs to](images/scatter-regions.png)
+
+```    
+ggplot(countries, ggplot2::aes(longitude, latitude, fill = longitude)) +
+  theme_wb(chartType = "scatter", addYZeroLine = TRUE, addXZeroLine = TRUE) +
+  geom_point() +
+  labs(
+    title = "Scatterplot between x and y",
+    subtitle = "This is the subtitle") +
+  ylab("Latitude") +
+  xlab("Longitude") +
+  scale_fill_binned_wb(palette = "divPosNeg", name = "Longitude", n.breaks = 8)
+```
+
+![A scatter plot of country latitudes versus longitudes, with a diverging binned scale for the fill aesthetic](images/scatter-binned.png)
 
 ### add_note_wb()
 
 To add a note or source reference at the bottom of your plot, add the `add_note_wb()` to your ggplot. Use the `noteTitle` for the title of the note (which will be displayed in bold), and the `note` parameter for the body of the note.
 
-```
-ggplot(data, aes(...)) +
-  geom_xyz() +
-  theme_wb() +
-  add_note_wb(noteTitle = "Source:", note = "World Bank")
+```    
+ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c))) +
+  theme_wb(chartType = "scatter", addYZeroLine = TRUE, addXZeroLine = TRUE) +
+  geom_point() +
+  labs(
+    title = "Scatterplot between x and y",
+    subtitle = "This is the subtitle") +
+  ylab("Latitude") +
+  xlab("Longitude") +
+  scale_fill_wb_d(palette = "region") +
+  theme(legend.title = element_blank()) +
+  __add_note_wb(noteTitle = "Source:", note = "World Bank")__
 ```
 
-TODO: add example
+![A scatter plot of country latitudes versus longitudes, with a discrete color scale showing the region each country belongs to, and a note stating World Bank as the source](images/scatter-regions-note.png)
 
 ### Data
 
