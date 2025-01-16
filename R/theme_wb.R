@@ -23,10 +23,10 @@
 # [x] zeroLine
 # [x] noteTitle in bold
 # [x] Semibold font
-# [] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
+# [x] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
 # [] Make everything pixel units
 # [] All the spacing: line heights, ggsave::scale, ...
-# [] Chart type specific styling
+# [x] Chart type specific styling
 # [] Logo?
 # [] geom specific, non-aesthetic defaults (bar width, linejoin, linecap)
 #
@@ -42,30 +42,20 @@ theme_wb <- function(
     addXAxisTitle = FALSE
     ) {
 
+  # Warnings for cases where zero lines can't be added
   if(addXZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
   if(addYZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
   if(addYZeroLine & chartType == "beeswarm") warning("Zero lines can't be added discrete scales")
   if(addXZeroLine & chartType == "line") warning("Zero lines can't be added to date/time scales")
 
+  # Makes text uppercase, used for the labels on categorical axes and for categorical legend labesl
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
   }
 
-  baseSize <- 11
-
-  options(ggplot2.discrete.colour = WBPALETTES$default)
-  options(ggplot2.continuous.colour = WBPALETTES$seq)
-  ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
-  ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
-  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
-  ggplot2::update_geom_defaults("text", ggplot2::aes(
-    hjust = 0,
-    size = baseSize*0.8/ggplot2::.pt,
-    color = WBCOLORS$darkText,
-    family = "Open Sans 600")
-  )
-
-  # Inventory all font files
+  # Check if the Open Sans font is installed
+  # If not, add the regular, semibold and bold fonts
+  # They become available as the "Open Sans 400", "Open Sans 600" and "Open Sans 700" font families
   font_files <- sysfonts::font_files()
   if(!any(grepl(x = font_files$file, pattern = "^OpenSans"))) {
     weights <- c(400, 600, 700)
@@ -77,12 +67,40 @@ theme_wb <- function(
       )
     }
   }
-
   showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
 
-  theme_custom <- ggplot2::theme_minimal(base_size = baseSize)
+  # Change default color palettes
+  options(ggplot2.discrete.colour = WBPALETTES$default)
+  options(ggplot2.continuous.colour = WBPALETTES$seq)
+
+  # Change default geom aesthetics
+  ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
+  ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
+  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
+  ggplot2::update_geom_defaults("text", ggplot2::aes(
+    hjust = 0,
+    size = baseSize*0.8/ggplot2::.pt,
+    color = WBCOLORS$darkText,
+    family = "Open Sans 600")
+  )
+
+  baseSize <- 11
+
+  # Zero lines
+  xZeroLine <- ggplot2::geom_vline(
+    xintercept = 0,
+    color = get_color(WBSTYLE$zeroLine$color),
+    linewidth = WBSTYLE$zeroLine$lineWidth/3
+  )
+  yZeroLine <- ggplot2::geom_hline(
+    yintercept = 0,
+    color = get_color(WBSTYLE$zeroLine$color),
+    linewidth = WBSTYLE$zeroLine$lineWidth/3
+  )
+
   theme_custom <- ggplot2::theme_minimal(base_size = baseSize) +
+  # General theme settings
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
 
@@ -93,164 +111,133 @@ theme_wb <- function(
       r = 8
     ),
 
+    # Plot title styling
     plot.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$title$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$l,
-      color = get_color(WBSTYLE$title$color),
-      # This doesn't seem to work
-      # lineheight = WBSTYLE$title$height/100
+      color = get_color(WBSTYLE$title$color)
     ),
+    # Aligns the title to the plot, instead of to the plot panel
     plot.title.position = "plot",
 
+    # Plot subtitle
     plot.subtitle = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$subTitle$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$m,
-      color = get_color(WBSTYLE$subTitle$color),
-      #margin = ggplot2::margin(0,0,15,0)
+      color = get_color(WBSTYLE$subTitle$color)
     ),
 
+    # Plot caption styling. The caption is used for the chart note
     plot.caption = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$note$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$note$color),
       hjust = 0
     ),
     plot.caption.position = "plot",
 
+    # Axis title styling
     axis.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$axisLabel$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$m,
       color = get_color(WBSTYLE$axisLabel$color)
     ),
-    axis.title.y = ggplot2::element_text(
-      #margin = ggplot2::margin(0, 5, 0, 0)
-    ),
-    axis.title.x = ggplot2::element_text(
-      #margin = ggplot2::margin(5, 0, 0, 0)
-    ),
 
+    # Axis labels styling
     axis.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$tickLabel$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$m,
       color = get_color(WBSTYLE$tickLabel$color)
     ),
 
+    # Axis ticks are removed by default
     axis.ticks = ggplot2::element_blank(),
 
+    # Plot grid styling
     panel.grid.major = ggplot2::element_line(
       color = get_color(WBSTYLE$gridLine$color),
       linewidth = WBCOLORS$gridLine$lineWidth/2,
       linetype = "42"
     ),
-
     panel.grid.minor = ggplot2::element_blank(),
 
+    # Legend styling
+    legend.location = "plot",
+    legend.position = "bottom",
+    legend.justification.bottom = "left",
+    legend.margin = ggplot2::margin(0,0,4,0),
     legend.title = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$legendTitle$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$legendTitle$color),
       hjust = 0,
       margin = ggplot2::margin(0,0,0,0)
     ),
     legend.title.position = "top",
-    legend.location = "plot",
     legend.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
-      #size = WBSTYLE$chartLarge$fontSize$s,
       color = get_color(WBSTYLE$categoryLabel$color),
       margin = ggplot2::margin(0, 0, 0, 0)
     ),
-    legend.key.spacing.y = ggplot2::unit(0.7, "lines"),
-    legend.position = "bottom",
-    legend.justification.bottom = "left",
-    legend.margin = ggplot2::margin(0,0,4,0)
+    legend.key.spacing.y = ggplot2::unit(0.7, "lines")
   )
 
-  if(chartType == "bar"){
+  # Bar and beeswarm chart styling
+  if(chartType == "bar" | chartType == "beeswarm"){
     theme_custom <- theme_custom + ggplot2::theme(
+
+      # Continuous axis styling
       axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
       axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
+      axis.text.x = ggplot2::element_text(
+        color = WBCOLORS$lightText,
+      ),
+      axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+
+      # Discrete axis styling
       axis.ticks.y = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_text(
         color = WBCOLORS$darkText,
         family = "Open Sans 600",
         hjust = 0
       ),
-      axis.text.x = ggplot2::element_text(
-        color = WBCOLORS$lightText,
-      ),
-      axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
       axis.title.y = ggplot2::element_blank()
     )
     theme_custom <- list(
       theme_custom,
-      ggplot2::scale_x_continuous(
-        # Should the number of ticks be part of the style?
-        breaks = scales::breaks_pretty(5),
-        position = 'top',
-        expand = ggplot2::expansion(add = c(0,xExpansion))
-      ),
-      ggplot2::scale_y_discrete(
-        labels = makeUpperCase,
-      ),
-      ggplot2::coord_cartesian(
-        clip = 'off'
-      ),
-      ggplot2::theme(
-        panel.grid.major.x = ggplot2::element_blank(),
-        panel.grid.major.y = ggplot2::element_blank()
-      )
-    )
-  }
 
-  if(chartType == "beeswarm"){
-    theme_custom <- theme_custom + ggplot2::theme(
-      axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
-      axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
-      axis.ticks.y = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_text(
-        color = WBCOLORS$darkText,
-        family = "Open Sans 600",
-        hjust = 0,
-        margin = ggplot2::margin(0,0,0,0)
-      ),
-      axis.text.x = ggplot2::element_text(
-        color = WBCOLORS$lightText,
-      ),
-      axis.title.y = ggplot2::element_blank(),
-      axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
-    )
-    theme_custom <- list(
-      theme_custom,
+      # Continuous scale settings
       ggplot2::scale_x_continuous(
         breaks = scales::breaks_pretty(5),
+        position = if(chartType == "bar") 'top' else 'bottom',
         expand = ggplot2::expansion(add = c(0,xExpansion))
       ),
       ggplot2::scale_y_discrete(
         labels = makeUpperCase,
       ),
+
+      # Discrete scale settings
       ggplot2::coord_cartesian(
         clip = 'off'
       ),
+
+      # Remove the grids when needed
       ggplot2::theme(
+        panel.grid.major.x = if(chartType == "bar") ggplot2::element_blank() else ggplot2::element_line(),
         panel.grid.major.y = ggplot2::element_blank()
       )
     )
-    if(addXZeroLine){
+
+    if(chartType == "beeswarm" & addXZeroLine){
       theme_custom <- list(
         theme_custom,
-        ggplot2::geom_vline(
-          xintercept = 0,
-          color = get_color(WBSTYLE$zeroLine$color),
-          linewidth = WBSTYLE$zeroLine$lineWidth/3
-        )
+        xZeroLine
       )
     }
   }
+
   if(chartType == "line"){
     theme_custom <- theme_custom + ggplot2::theme(
+
+      # Remove axis titles when needed
       axis.title.x = ggplot2::element_blank(),
       axis.title.y = if(addYAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
+
+      # Remove vertical grid
       panel.grid.major.x = ggplot2::element_blank()
     )
     theme_custom <- list(
@@ -263,34 +250,22 @@ theme_wb <- function(
     if(addYZeroLine){
       theme_custom <- list(
         theme_custom,
-        ggplot2::geom_hline(
-          yintercept = 0,
-          color = get_color(WBSTYLE$zeroLine$color),
-          linewidth = WBSTYLE$zeroLine$lineWidth/3
-        )
+        yZeroLine
       )
     }
   }
 
   if(chartType == "scatter"){
-    if(addYZeroLine){
-      theme_custom <- list(
-        theme_custom,
-        ggplot2::geom_hline(
-          yintercept = 0,
-          color = get_color(WBSTYLE$zeroLine$color),
-          linewidth = WBSTYLE$zeroLine$lineWidth/3
-        )
-      )
-    }
     if(addXZeroLine){
       theme_custom <- list(
         theme_custom,
-        ggplot2::geom_vline(
-          xintercept = 0,
-          color = get_color(WBSTYLE$zeroLine$color),
-          linewidth = WBSTYLE$zeroLine$lineWidth/3
-        )
+        xZeroLine
+      )
+    }
+    if(addYZeroLine){
+      theme_custom <- list(
+        theme_custom,
+        yZeroLine
       )
     }
   }
@@ -313,3 +288,15 @@ theme_wb <- function(
 #'
 #' @format A nested list with the World Bank visualization styling, derived from ingesting data-raw/wb-style.json file
 "WBSTYLE"
+
+#' Country data
+#'
+#' @format Data frame of available countries and regions from the World Bank API, as returned by wbstats::wbcountries
+#' @source https://api.worldbank.org/v2/country
+"countries"
+
+#' Life expactancy data
+#'
+#' @format Data frame of time series data for the SP.DYN.LE00.IN indicator for all countries and regions, as returned by wbstats::wb_data("SP.DYN.LE00.IN")
+#' @source https://data.worldbank.org/indicator/SP.DYN.LE00.IN
+"life.expectancy"

@@ -26,7 +26,11 @@ ggplot(data, aes(...)) +
   geom_xyz()
 ```
 
-The theme has some specific styling for certain chart types.
+
+
+TODO: what does the theme do without a set `chartType`?
+
+The theme has some specific style settings for certain chart types.
 
 With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
 
@@ -164,6 +168,8 @@ ggplot(data, aes(..., fill = region_iso3c)) +
   color_fill_wb_c(palette = "region")
 ```
 
+TODO: add real examples
+
 ### add_note_wb()
 
 To add a note or source reference at the bottom of your plot, add the `add_note_wb()` to your ggplot. Use the `noteTitle` for the title of the note (which will be displayed in bold), and the `note` parameter for the body of the note.
@@ -174,6 +180,8 @@ ggplot(data, aes(...)) +
   theme_wb() +
   add_note_wb(noteTitle = "Source:", note = "World Bank")
 ```
+
+TODO: add example
 
 ### Data
 

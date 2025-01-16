@@ -16,15 +16,15 @@ theme_wb(
 \arguments{
 \item{chartType}{Activates chart specific styling. Should be one of "line", "bar", "beeswarm" or "scatter"}
 
-\item{xExpansion}{Expand the x axis to make room for data labels on bar charts}
+\item{xExpansion}{Expand the x axis to make room for data labels on bar and beeswarm charts}
 
-\item{addXZeroLine}{Boolean for adding a line for zero on the X axis}
+\item{addXZeroLine}{Boolean for adding a line for zero on continuous X axes}
 
-\item{addYZeroLine}{Boolean for adding a line for zero on the Y axis}
+\item{addYZeroLine}{Boolean for adding a line for zero on continous Y axes}
 
-\item{addYAxisTitle}{Boolean for overruling the hiding of the Y axis title on line charts}
+\item{addYAxisTitle}{Boolean for overruling the hiding of the Y axis title of line charts}
 
-\item{addXAxisTitle}{Boolean for overruling the hiding of the Y axis title on line charts}
+\item{addXAxisTitle}{Boolean for overruling the hiding of the Y axis title of bar and beeswarm charts}
 }
 \value{
 None
