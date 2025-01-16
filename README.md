@@ -211,7 +211,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c)
   xlab("Longitude") +
   scale_fill_wb_d(palette = "region") +
   theme(legend.title = element_blank()) +
-  __add_note_wb(noteTitle = "Source:", note = "World Bank")__
+  add_note_wb(noteTitle = "Source:", note = "World Bank")
 ```
 
 ![A scatter plot of country latitudes versus longitudes, with a discrete color scale showing the region each country belongs to, and a note stating World Bank as the source](images/scatter-regions-note.png)
