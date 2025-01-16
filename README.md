@@ -26,13 +26,15 @@ ggplot(data, aes(...)) +
   geom_xyz()
 ```
 
+The theme
 
+- changes the font of all text to Open Sans. When Open Sans isn't installed, the theme adds it from Google Fonts
+- changes the default color palettes for the color and fill aesthetics to World Bank palettes, both for continuous and discrete variables
+- styles the title, subtitle, caption, axes and legends according to the World Bank data visualization style guide
 
-TODO: what does the theme do without a set `chartType`?
+In top of that, the theme has some specific style settings for certain chart types.
 
-The theme has some specific style settings for certain chart types.
-
-With `chartType = "line"`, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
+With __`chartType = "line"`__, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
 
 For line charts, the x aesthetic should be mapped to a date variable, and the y aesthetic to a numerical variable.
 
@@ -41,16 +43,18 @@ lifexp <- dplyr::filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU"
 
 ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
   theme_wb(chartType = "line") +
-  geom_line(data = life.expectancy, linejoin = "round", lineend = "round", color = WBCOLORS$darkest, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
-  geom_line(linejoin = "round", lineend = "round") +
+  geom_line(data = life.expectancy, lineend = "round", color = WBCOLORS$darkest, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
+  geom_line(lineend = "round") +
   ggtitle("Your chart title", subtitle = "Life expectancy at birth, total (years)") +
   theme(legend.title = element_blank()) +
   scale_color_wb_d()
 ```
 
+The `lineend` in `geom_line()` should be set to "round". This is not the default, and is not configurable through the theme, so it should be set manually.
+
 ![A line chart showing country life expectancy time series](images/line.png)
 
-With `chartType = "bar"`, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
+With __`chartType = "bar"`__, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
 
 For bar charts, the x aesthetic should be mapped to a numerical variable, and the y aesthetic to a discrete variable.
 
@@ -69,7 +73,9 @@ ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
 
 ![A bar chart showing country latitudes](images/bar.png)
 
-With `chartType = "beeswarm"`, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can add the X axis title with `addXAxisTitle = TRUE`, and expand the X axis with `xExpansion`.
+The ggplot2 default for `width` in `geom_bar()` (the width of the bars, as a percentage of space available for each bar) is 0.9, which leads to very dense bar charts. This default value is not adjustable through the theme, so in order to generate more visually balanced bar charts, the width should be set to a lower value. A value of 0.66 gives 2 thirds to the bars, and 1 third to spacing between them.
+
+With __`chartType = "beeswarm"`__, the horizontal grid lines are removed, the Y axis labels are capitalized and bolded, and the X axis title is removed. Like for bar charts you can add the X axis title with `addXAxisTitle = TRUE`, and expand the X axis with `xExpansion`.
 
 To generate beeswarm plots with ggplot2, you can install the `ggbeeswarm` package, which offers the `geom_beeswarm()` geometry.
 
@@ -115,7 +121,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_le
 
 ![A beeswarm plot showing country life expectancy in 2022](images/beeswarm-single.png)
 
-With `chartType = "scatter"`, the plot is only styled, but no chart elements are removed (so `theme_wb()` has the same effect as `theme_wb(chartType = "scatter")`.
+With __`chartType = "scatter"`__, the plot is only styled, but no chart elements are removed (so `theme_wb()` has the same effect as `theme_wb(chartType = "scatter")`.
 
 The default shape for `geom_point()` is modified by the theme to a filled circle with a white outline.
 

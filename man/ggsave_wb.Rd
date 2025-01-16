@@ -33,6 +33,8 @@ None
 Save plots with good default dimensions
 }
 \examples{
+\dontrun{
 ggsave_wb(filename = "name-of-your-plot.jpg")
+}
 
 }

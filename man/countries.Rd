@@ -5,7 +5,7 @@
 \alias{countries}
 \title{Country data}
 \format{
-Available countries and regions from the World Bank API, as returned by wbstats::wbcountries
+Data frame of available countries and regions from the World Bank API, as returned by wbstats::wbcountries
 }
 \source{
 https://api.worldbank.org/v2/country

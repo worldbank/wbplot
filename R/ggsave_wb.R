@@ -11,7 +11,9 @@
 #' @return None
 #'
 #' @examples
+#' \dontrun{
 #' ggsave_wb(filename = "name-of-your-plot.jpg")
+#' }
 #'
 #' @export
 

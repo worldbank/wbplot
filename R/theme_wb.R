@@ -24,11 +24,11 @@
 # [x] noteTitle in bold
 # [x] Semibold font
 # [x] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
-# [] Make everything pixel units
-# [] All the spacing: line heights, ggsave::scale, ...
 # [x] Chart type specific styling
-# [] Logo?
-# [] geom specific, non-aesthetic defaults (bar width, linejoin, linecap)
+# [] Make everything pixel units => won't fix: use ggplot's defaults
+# [] All the spacing: line heights, ggsave::scale, ... => won't fix: use ggplot's defaults
+# [] geom specific, non-aesthetic defaults (bar width, lineend) => very hard to change, should be set manually
+# [] Adding a logo? => Not for now
 #
 #' @export
 #'
@@ -72,7 +72,9 @@ theme_wb <- function(
 
   # Change default color palettes
   options(ggplot2.discrete.colour = WBPALETTES$default)
+  options(ggplot2.discrete.fill = WBPALETTES$default)
   options(ggplot2.continuous.colour = WBPALETTES$seq)
+  options(ggplot2.continuous.fill = WBPALETTES$seq)
 
   # Change default geom aesthetics
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
