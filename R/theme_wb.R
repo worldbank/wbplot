@@ -183,7 +183,7 @@ theme_wb <- function(
     theme_custom <- theme_custom + ggplot2::theme(
 
       # Continuous axis styling
-      axis.ticks.x = ggplot2::element_line(color = WBCOLORS$lighter),
+      axis.ticks.x = if(chartType == "bar") ggplot2::element_line(color = WBCOLORS$lighter) else ggplot2::element_blank(),
       axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
       axis.text.x = ggplot2::element_text(
         color = WBCOLORS$lightText,
