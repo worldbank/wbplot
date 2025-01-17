@@ -82,7 +82,7 @@ theme_wb <- function(
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
   ggplot2::update_geom_defaults("text", ggplot2::aes(
     hjust = 0,
-    size = baseSize*0.8/ggplot2::.pt,
+    size = baseSize*0.7/ggplot2::.pt,
     color = WBCOLORS$darkText,
     family = "Open Sans 600")
   )
@@ -124,7 +124,8 @@ theme_wb <- function(
     # Plot subtitle
     plot.subtitle = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$subTitle$weight)),
-      color = get_color(WBSTYLE$subTitle$color)
+      color = get_color(WBSTYLE$subTitle$color),
+      margin = ggplot2::margin(0,0,8,0)
     ),
 
     # Plot caption styling. The caption is used for the chart note
@@ -195,7 +196,8 @@ theme_wb <- function(
       axis.text.y = ggplot2::element_text(
         color = WBCOLORS$darkText,
         family = "Open Sans 600",
-        hjust = 0
+        hjust = 0,
+        size = rel(0.8)
       ),
       axis.title.y = ggplot2::element_blank()
     )
