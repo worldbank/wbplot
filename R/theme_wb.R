@@ -174,8 +174,9 @@ theme_wb <- function(
     legend.text = ggplot2::element_text(
       family = paste(WBSTYLE$font$fontFamily, get_font_weight(WBSTYLE$categoryLabel$weight)),
       color = get_color(WBSTYLE$categoryLabel$color),
-      margin = ggplot2::margin(0, 0, 0, 0)
+      margin = ggplot2::margin(0, 0, 0, 2)
     ),
+    legend.key.spacing.x = ggplot2::unit(1, "lines"),
     legend.key.spacing.y = ggplot2::unit(0.7, "lines")
   )
 
@@ -199,7 +200,8 @@ theme_wb <- function(
         hjust = 0,
         size = rel(0.8)
       ),
-      axis.title.y = ggplot2::element_blank()
+      axis.title.y = ggplot2::element_blank(),
+      legend.key.width = unit(0, 'mm'),
     )
     theme_custom <- list(
       theme_custom,
@@ -207,6 +209,11 @@ theme_wb <- function(
       # Continuous scale settings
       ggplot2::scale_x_continuous(
         breaks = scales::breaks_pretty(5),
+        labels = scales::label_number(
+          big.mark = ",",
+          decimal.mark = ".",
+          scale_cut = scales::cut_short_scale()
+        ),
         position = if(chartType == "bar") 'top' else 'bottom',
         expand = ggplot2::expansion(add = c(0,xExpansion))
       ),
@@ -249,6 +256,14 @@ theme_wb <- function(
       ggplot2::coord_cartesian(
         expand = FALSE,
         clip = 'off'
+      ),
+      ggplot2::scale_y_continuous(
+        breaks = scales::breaks_pretty(5),
+        # labels = scales::label_number(
+        #   big.mark = ",",
+        #   decimal.mark = ".",
+        #   scale_cut = scales::cut_short_scale()
+        # )
       )
     )
     if(addYZeroLine){
@@ -260,6 +275,27 @@ theme_wb <- function(
   }
 
   if(chartType == "scatter"){
+    theme_custom <- list(
+      theme_custom,
+      ggplot2::coord_cartesian(
+        expand = FALSE,
+        clip = 'off'
+      ),
+      ggplot2::scale_x_continuous(
+        breaks = scales::breaks_pretty(5),
+        labels = scales::label_number(
+          big.mark = ",",
+          decimal.mark = ".",
+          scale_cut = scales::cut_short_scale())
+      ),
+      ggplot2::scale_y_continuous(
+        breaks = scales::breaks_pretty(5),
+        labels = scales::label_number(
+          big.mark = ",",
+          decimal.mark = ".",
+          scale_cut = scales::cut_short_scale())
+      )
+    )
     if(addXZeroLine){
       theme_custom <- list(
         theme_custom,
