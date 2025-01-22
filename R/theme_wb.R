@@ -15,20 +15,6 @@
 #' theme_wb()
 #'
 #' @importFrom utils head
-
-# TODO
-# [x] Get colors from color names
-# [x] Open Sans
-# [x] Color scales
-# [x] zeroLine
-# [x] noteTitle in bold
-# [x] Semibold font
-# [x] Legend styling: https://www.tidyverse.org/blog/2024/02/ggplot2-3-5-0-legends/
-# [x] Chart type specific styling
-# [] Make everything pixel units => won't fix: use ggplot's defaults
-# [] All the spacing: line heights, ggsave::scale, ... => won't fix: use ggplot's defaults
-# [] geom specific, non-aesthetic defaults (bar width, lineend) => very hard to change, should be set manually
-# [] Adding a logo? => Not for now
 #
 #' @export
 #'
@@ -54,12 +40,23 @@ theme_wb <- function(
   }
 
   # Change default color palettes
-  options(ggplot2.discrete.colour = WBPALETTES$default)
-  options(ggplot2.discrete.fill = WBPALETTES$default)
-  options(ggplot2.continuous.colour = WBPALETTES$seq)
-  options(ggplot2.continuous.fill = WBPALETTES$seq)
+  # This is not working (with on.exit everything is always reverted, and without it we're changing the R landscape)
+  # old <- options(
+  #   ggplot2.discrete.colour = ggplot2::scale_fill_hue,
+  #   ggplot2.discrete.fill = ggplot2::scale_fill_hue,
+  #   ggplot.continuous.colour = ggplot2::scale_colour_continuous,
+  #   ggplot.continuous.fill = ggplot2::scale_colour_continuous
+  # )
+  # on.exit(options(old), add = TRUE)
+  # options(
+  #   ggplot2.discrete.colour = WBPALETTES$default,
+  #   ggplot2.discrete.fill = WBPALETTES$default,
+  #   ggplot2.continuous.colour = WBPALETTES$seq,
+  #   ggplot2.continuous.fill = WBPALETTES$seq
+  # )
 
   # Change default geom aesthetics
+  # Should be reset to the ggplot defaults after use somehow
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
