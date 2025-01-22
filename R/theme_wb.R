@@ -53,23 +53,6 @@ theme_wb <- function(
     return(toupper(lowcase))
   }
 
-  # Check if the Open Sans font is installed
-  # If not, add the regular, semibold and bold fonts
-  # They become available as the "Open Sans 400", "Open Sans 600" and "Open Sans 700" font families
-  font_files <- sysfonts::font_files()
-  if(!any(grepl(x = font_files$file, pattern = "^OpenSans"))) {
-    weights <- c(400, 600, 700)
-    for(weight in weights){
-      sysfonts::font_add_google(
-        name = "Open Sans",
-        family = paste0("Open Sans ", weight),
-        regular.wt = weight
-      )
-    }
-  }
-  showtext::showtext_opts(dpi = 300)
-  showtext::showtext_auto()
-
   # Change default color palettes
   options(ggplot2.discrete.colour = WBPALETTES$default)
   options(ggplot2.discrete.fill = WBPALETTES$default)

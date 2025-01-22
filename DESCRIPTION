@@ -1,6 +1,6 @@
 Package: wbplot
 Title: A World Bank ggplot theme
-Version: 0.0.1.0
+Version: 0.0.1.1
 Authors@R: 
     person("Maarten", "Lambrechts", , "mlambrechts@worldbank.org", role = c("aut", "cre"))
 Maintainer: Maarten Lambrechts <mlambrechts@worldbank.org>

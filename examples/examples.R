@@ -29,8 +29,23 @@ ggsave_wb(filename = "examples/Examples - ggplot-scatter.png", height = 960)
 
 p.wb <- p + theme_wb(chartType = "scatter") +
   aes(color = NULL, fill = tolower(region_iso3c)) +
-  scale_fill_wb_d(palette = "region", name = "Region")
+  scale_fill_wb_d(palette = "region", name = "Region") +
+  theme(axis.title.y = element_blank())
 p.wb
 
-ggsave_wb(filename = "examples/Examples - wb-scatter.png", height = 960)
+ggsave_wb(filename = "examples/Examples - wb-scatter2.png", height = 960)
+
+# Bar chart
+country.expectancy <- head(dplyr::arrange(data, desc(SP.DYN.LE00.IN)),10)
+
+ggplot(country.expectancy, aes(x = SP.DYN.LE00.IN, y = reorder(country, SP.DYN.LE00.IN))) +
+  theme_wb(chartType = "bar", xExpansion = 3, addXAxisTitle = FALSE) +
+  geom_bar(stat="identity", width = 0.66) +
+  geom_text(aes(label = round(SP.DYN.LE00.IN, 1)), nudge_x = 0.7) +
+  labs(
+    title = "The countries with the longest living people",
+    subtitle = "Life expectancy at birth (total (years), 2022)") +
+add_note_wb(noteTitle = "Source:", note = "World Bank")
+
+ggsave_wb(filename = "images/bar2.png")
 
