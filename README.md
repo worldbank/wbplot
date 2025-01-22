@@ -29,10 +29,11 @@ ggplot(data, aes(...)) +
 The theme
 
 - changes the font of all text to Open Sans. When Open Sans isn't installed, the theme adds it from Google Fonts
-- changes the default color palettes for the color and fill aesthetics to World Bank palettes, both for continuous and discrete variables
 - styles the title, subtitle, caption, axes and legends according to the World Bank data visualization style guide
 
-In top of that, the theme has some specific style settings for certain chart types.
+To apply the World Bank color palettes to your visualizations, see the 'Colors' section below.
+
+On top of that, the theme has some specific style settings for certain chart types.
 
 With __`chartType = "line"`__, the vertical grid lines, the X axis title and the Y axis title are removed. If you do need the Y axis title, you can add it with `addYAxisTitle = TRUE`.
 
