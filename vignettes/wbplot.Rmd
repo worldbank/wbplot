@@ -200,5 +200,5 @@ Binned color scales are also provided:
 scatterplot +
   aes(fill = NY.GDP.PCAP.PP.CD) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
-  scale_fill_wb_c(palette = "seq", name = "GDP/capita")
+  scale_fill_wb_b(palette = "seq", name = "GDP/capita", n.breaks = 5)
 ```

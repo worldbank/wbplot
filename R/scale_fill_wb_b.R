@@ -8,11 +8,11 @@
 #' @return None
 #'
 #' @examples
-#' scale_fill_wb_d(palette = "seq", n.breaks = 8)
+#' scale_fill_wb_b(palette = "seq", n.breaks = 8)
 #'
 #' @export
 
-scale_fill_wb_d <- function(...,
+scale_fill_wb_b <- function(...,
                             palette = "seq",
                             na.value = WBCOLORS[["noData"]]) {
 
