@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Installation
+## Installation and loading
 
 Install the package with `devtools::install_github("worldbank/wbplot")` or `remotes::install_github("worldbank/wbplot")`.
 
@@ -31,9 +31,6 @@ You might run into an authentication error. To overcome this, generate a token o
 ``` r
 devtools::install_github("worldbank/wbplot", auth_token = "MyPersonalToken")
 ```
-
-## Included data
-
 When the package is installed, load it into your R session with `library(wbplot)`. All `wbplot` extend the functionality of the `ggplot2` package, and for data manipulation, we use the `dplyr` function.
 
 ```{r setup}
@@ -41,6 +38,8 @@ library(dplyr)
 library(ggplot2)
 library(wbplot)
 ```
+
+## Included data
 
 The package comes with 2 data sets:
 
@@ -200,5 +199,82 @@ Binned color scales are also provided:
 scatterplot +
   aes(fill = NY.GDP.PCAP.PP.CD) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
-  scale_fill_wb_b(palette = "seq", name = "GDP/capita", n.breaks = 5)
+  scale_fill_wb_b(palette = "divPosNeg", name = "GDP/capita", n.breaks = 8)
 ```
+## Styling a line chart
+
+Let's prepare some time series data and make a ggplot line chart.
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+life.series <- filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU", "RUS", "IDN", "JPN"))
+
+linechart <- ggplot(life.series, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
+  geom_line(lineend = "round") +
+  ggtitle("Life expectancy of selected countries", subtitle = "Life expectancy at birth, total (years)") +
+  theme(legend.title = element_blank())
+linechart
+```
+
+Applying the general `wb_theme` and the line chart specific styling to it, together with the World Bank discrete color scale:
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+linechart +
+  theme_wb(chartType = "line", addYZeroLine = TRUE) +
+  scale_color_wb_d() +
+  theme(legend.title = element_blank())
+```
+
+We can give more context by providing the data for all countries in the background.
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+linechart +
+  theme_wb(chartType = "line", addYZeroLine = TRUE) +
+  scale_color_wb_d() +
+  theme(legend.title = element_blank()) +
+  geom_line(
+    data = life.expectancy,
+    aes(group = iso3c),
+    lineend = "round",
+    color = WBCOLORS$darkest,
+    alpha = 0.15,
+    linewidth = 0.25
+  ) +
+  geom_line(lineend = "round")
+```
+
+Here you can see that all colors of the World Bank data visualization style are available through `WBCOLORS`.
+
+## Styling a beeswarm plot
+
+Finally, let's create a beeswarm plot and style it. To plot a beeswarm plot, we use the ggbeeswarm package.
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
+  left_join(countries, by = "iso3c") %>%
+  filter(income_level_iso3c != "INX") %>%
+  mutate(income_level_iso3c = factor(income_level_iso3c, levels = c("HIC", "UMC", "LMC", "LIC")))
+
+beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +
+  ggbeeswarm::geom_beeswarm(
+    cex = 2.5,
+    method = "swarm",
+    priority = "random",
+    size = 3
+  ) +
+  ggtitle("Countries with higher income have longer life expectancy", subtitle = "Life expectancy at birth (total (years), 2022)") +
+  theme(legend.position = "none")
+beeswarm
+```
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+beeswarm +
+  theme_wb(chartType = "beeswarm", addYAxisTitle = TRUE) +
+  scale_fill_wb_d(palette = "income") +
+  theme(legend.position = "none")
+```
+
+## Colors
+
+
+
+## Saving plots
