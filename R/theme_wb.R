@@ -156,8 +156,9 @@ theme_wb <- function(
       color = get_color(WBSTYLE$categoryLabel$color),
       margin = ggplot2::margin(0, 0, 0, 2)
     ),
-    legend.key.spacing.x = ggplot2::unit(1, "lines"),
-    legend.key.spacing.y = ggplot2::unit(0.7, "lines")
+    legend.key.spacing.x = ggplot2::unit(0, "lines"),
+    #legend.key.spacing.y = ggplot2::unit(0.7, "lines")
+    legend.key.width = unit(1, "null")
   )
 
   # Bar and beeswarm chart styling

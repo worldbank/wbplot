@@ -1,0 +1,112 @@
+---
+title: "Using the wbplot ggplot2 theme"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the wbplot ggplot2 theme}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<style>
+    img {
+        border: 0;
+    }
+</style>
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+Install the package with `devtools::install_github("worldbank/wbplot")` or `remotes::install_github("worldbank/wbplot")`.
+
+You might run into an authentication error. To overcome this, generate a token on [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens) and run
+
+``` r
+devtools::install_github("worldbank/wbplot", auth_token = "MyPersonalToken")
+```
+
+## Using the package
+
+When the package is installed, load it into your R session with `library(wbplot)`. All `wbplot` extend the functionality of the `ggplot2` package, and for data manipulation, we use the `dplyr` function.
+
+```{r setup}
+library(dplyr)
+library(ggplot2)
+library(wbplot)
+```
+
+The package comes with 2 data sets:
+
+-   `countries`: available countries and regions from the World Bank API, as returned by `wbstats::wbcountries`
+-   `life.expectancy`: time series data for the SP.DYN.LE00.IN indicator for all countries and regions, as returned by `wbstats::wb_data("SP.DYN.LE00.IN")`
+
+```{r}
+print(countries)
+```
+
+```{r}
+print(life.expectancy)
+```
+
+We can make a standard ggplot bar chart from the life expectancy data for 2022.
+
+```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
+country.names <- select(countries, iso3c, country)
+
+life.22 <- filter(life.expectancy, date == 2022) %>%
+  select(iso3c, SP.DYN.LE00.IN)
+
+life.22.top10 <- head(dplyr::arrange(life.22, desc(SP.DYN.LE00.IN)),10) %>%
+  left_join(country.names, by = "iso3c")
+
+barchart <- ggplot(life.22.top10, aes(
+    x = SP.DYN.LE00.IN,
+    y = reorder(country, SP.DYN.LE00.IN)
+  )) +
+  geom_bar(stat="identity", width = 0.66) +
+  geom_text(aes(label = round(SP.DYN.LE00.IN, 1)), nudge_x = 0.7) +
+  labs(
+    title = "The countries with the longest living people",
+    subtitle = "Life expectancy at birth (total (years), 2022)")
+barchart
+```
+
+Now we can apply the `theme_wb` theme to the plot. This will change the used fonts, the color of the bars, the positioning of the the title and subtitle, and the styling of the grid lines.
+
+```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
+barchart + theme_wb()
+```
+
+The `wb_theme()`can be added to any ggplot visualization. But the World Bank data visualization style calls for some bar chart specific styling options. We can apply those by setting by setting the `chartType` parameter to "bar" in the theme function:
+
+```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
+barchart + theme_wb(chartType = "bar")
+```
+This will remove the grid lines, remove the axis titles, move the x axis to the top and align the category labels to the left.
+
+It will also avoid scales to expand beyond the values in the data, which might clip some elements on the chart, like data labels added with `geom_text`. You can add some expansion to the x axis to avoid this:
+
+```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
+barchart + theme_wb(chartType = "bar", xExpansion = 3)
+```
+
+If you need a title for the x axis, you can add it again with the `addXAxisTitle` parameter (which you then should set with `ggplot2::xlab()`.
+
+```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
+barchart + theme_wb(chartType = "bar", xExpansion = 3, addXAxisTitle = TRUE)
+```
+
+A common element on World Bank data visualizations are notes or source references. You can add a styled note to the bottom left corner of a plot with `add_note_wb()`.
+
+```{r, fig.dim = c(8,5), dpi = 300, out.width = "100%"}
+barchart +
+  theme_wb(chartType = "bar", xExpansion = 3, addXAxisTitle = FALSE) +
+  add_note_wb(noteTitle = "Source:", note = "World Bank")
+```
+
+
