@@ -1,8 +1,8 @@
 ---
-title: "Using the wbplot ggplot2 theme"
+title: "wbplot: the World Bank ggplot2 theme"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using the wbplot ggplot2 theme}
+  %\VignetteIndexEntry{wbplot: the World Bank ggplot2 theme}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+## What is wbplot?
+
+wbplot is an R package that provides functions for theming ggplot2 visualizations according to the [World Bank Data Visualization Style Guide](https://wbg-vis-design.vercel.app/).
 
 ## Installation and loading
 
@@ -275,6 +279,33 @@ beeswarm +
 
 ## Colors
 
+All colors of the World Bank Data Visualization Style Guide are available through `WBCOLORS`.
 
+```{r}
+WBCOLORS$female
+
+WBCOLORS$noData
+```
+
+Likewise, all color palettes are available through `WBPALETTES`.
+
+The sequential palettes are `WBPALETTES$seq`, `WBPALETTES$seqRev`, `WBPALETTES$seqB`
+, `WBPALETTES$seqY` and `WBPALETTES$seqP`. The diverging palettes are `WBPALETTES$divPosNeg` and `WBPALETTES$divLR`. All these palettes can be used with the continuous and binned color scales (`scale_fill_wb_c()`, `scale_color_wb_c()`, `scale_fill_wb_b()`, `scale_color_wb_b()`), with the palette parameter (eg. `scale_fill_wb_c(palette = "seqY")`).
+
+The discrete color palettes are `default`, `defaultText`, `region`, `regionText`, `income`, `gender`, `urbanisation`, `age` and `binary`. These can be used in `scale_fill_wb_d()` and `scale_color_wb_d()`, with the `palette` parameter. When the values in the mapped column correspond to the names of the colors of the palette, values are automatically matched to the correct color.
+
+```{r}
+WBPALETTES$income
+
+WBPALETTES$gender
+```
 
 ## Saving plots
+
+As always , you can save plots with `ggsave()`. You should be able to get good results by setting `units` to "px", `width` to 960, and `scale` to 2. The optimal `height` is determined by the chart type and the data, but the default is 540.
+
+```{r, eval = FALSE}
+ggsave(filename = "my-worldbank-chart.png", units = "px", width = 960, height = 540, scale = 2)
+```
+
+For convenience, you can use `ggsave_wb(filename = "my-worldbank-chart.png")`, which has these values for units, dimensions and scale by default.
