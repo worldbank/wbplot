@@ -89,7 +89,7 @@ Now we can apply the `theme_wb` theme to the plot. This will change the used fon
 barchart + theme_wb()
 ```
 
-The `wb_theme()`can be added to any ggplot visualization. But the World Bank data visualization style calls for some bar chart specific styling options. We can apply those by setting by setting the `chartType` parameter to "bar" in the theme function:
+The `wb_theme()` can be added to any ggplot visualization. But the World Bank data visualization style calls for some bar chart specific styling options. We can apply those by setting by setting the `chartType` parameter to "bar" in the theme function:
 
 ```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
 barchart + theme_wb(chartType = "bar")
@@ -132,7 +132,7 @@ print(scatterdata)
 ```
 With this data, we can create a default ggplot scatterplot.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot <- ggplot(scatterdata, aes(NY.GDP.PCAP.PP.CD, SP.DYN.LE00.IN, fill = region_iso3c)) +
   geom_point() +
   labs(
@@ -147,25 +147,25 @@ Notice that because you ran the `theme_wb()` function before, the default shape 
 
 Applying `theme_wb` to this plot gives you this:
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot + theme_wb()
 ```
 
 Like for bar charts, the World Bank data visualization style has some specific styling for scatter plots:
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot + theme_wb(chartType = "scatter")
 ```
 
 Whenever a continuous scale is present, you can include a line to indicate the zero value on the axis. When zero was not included on the axis initially, the scale will extend to include it.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot + theme_wb(chartType = "scatter", addXZeroLine = TRUE, addYZeroLine = TRUE)
 ```
 
 The wbplot package includes continuous and discrete color scales for the World Bank data visualization color palettes. In this case we should use the `scale_fill_wb_d` to apply the default discrete color palette to the regions.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
   scale_fill_wb_d(name = "Region")
@@ -173,7 +173,7 @@ scatterplot +
 
 Each World Bank also has a color assigned to it in the `region` palette, so we can map the region code directly to the corresponding color.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   aes(fill = tolower(region_iso3c)) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
@@ -182,7 +182,7 @@ scatterplot +
 
 Income levels also have their own palette, called "income".
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   aes(fill = tolower(income_level_iso3c)) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
@@ -191,7 +191,7 @@ scatterplot +
 
 Alternatively, we can map the fill aesthetic to a numeric variable, and use the continuous color scale to apply a World Bank continuous color palette.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   aes(fill = NY.GDP.PCAP.PP.CD) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
@@ -199,17 +199,18 @@ scatterplot +
 ```
 
 Binned color scales are also provided:
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   aes(fill = NY.GDP.PCAP.PP.CD) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
   scale_fill_wb_b(palette = "divPosNeg", name = "GDP/capita", n.breaks = 8)
 ```
+
 ## Styling a line chart
 
 Let's prepare some time series data and make a ggplot line chart.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 life.series <- filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU", "RUS", "IDN", "JPN"))
 
 linechart <- ggplot(life.series, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
@@ -221,7 +222,7 @@ linechart
 
 Applying the general `wb_theme` and the line chart specific styling to it, together with the World Bank discrete color scale:
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 linechart +
   theme_wb(chartType = "line", addYZeroLine = TRUE) +
   scale_color_wb_d() +
@@ -230,7 +231,7 @@ linechart +
 
 We can give more context by providing the data for all countries in the background.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 linechart +
   theme_wb(chartType = "line", addYZeroLine = TRUE) +
   scale_color_wb_d() +
@@ -252,7 +253,7 @@ Here you can see that all colors of the World Bank data visualization style are 
 
 Finally, let's create a beeswarm plot and style it. To plot a beeswarm plot, we use the ggbeeswarm package.
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
   left_join(countries, by = "iso3c") %>%
   filter(income_level_iso3c != "INX") %>%
@@ -270,7 +271,7 @@ beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level
 beeswarm
 ```
 
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%"}
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 beeswarm +
   theme_wb(chartType = "beeswarm", addYAxisTitle = TRUE) +
   scale_fill_wb_d(palette = "income") +
