@@ -156,7 +156,7 @@ All World Bank Data Visualization colors are available through the `WBCOLORS` gl
 wbplot comes with 6 color scale functions:
 
 - `scale_color_wb_c`and `scale_fill_wb_c`, for mapping continuous variables to the fill and color aesthetics. The `palette` parameter determines the color palette to use, and should be one of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP' (these are the sequential color palettes), or 'divPosNeg' or 'divLR' (these are the diverging color palettes). The direction of the palette can be reversed by setting `direction = -1`. NA values will be colored in with `WBCOLORS$noData`.
-- `scale_color_binned_wb`and `scale_fill_binned_wb` are the binned equivalents of `scale_color_wb_c`and `scale_fill_wb_c`. They share the same palettes, the number of bins can be set with `n.breaks`.
+- `scale_color_wb_b`and `scale_fill_wb_b` are the binned equivalents of `scale_color_wb_c`and `scale_fill_wb_c`. They share the same palettes, the number of bins can be set with `n.breaks`.
 - `scale_color_wb_d`and `scale_fill_wb_d`, for mapping discrete variables to the fill and color aesthetics. When the `palette` parameter matches the mapped level variable, the levels will be automatically matched to their corresponding colors. The available palettes and their levels are
     - `default`: the default palette, with 9 distinct colors
     - `defaultText`: darker colors for the `default` palette, to be used for text
@@ -192,7 +192,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = longitude)) +
     subtitle = "This is the subtitle") +
   ylab("Latitude") +
   xlab("Longitude") +
-  scale_fill_binned_wb(palette = "divPosNeg", name = "Longitude", n.breaks = 8)
+  scale_fill_wb_b(palette = "divPosNeg", name = "Longitude", n.breaks = 8)
 ```
 
 ![A scatter plot of country latitudes versus longitudes, with a diverging binned scale for the fill aesthetic](images/scatter-binned.png)

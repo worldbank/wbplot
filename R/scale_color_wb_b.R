@@ -8,11 +8,11 @@
 #' @return None
 #'
 #' @examples
-#' scale_color_binned_wb(palette = "seq", n.breaks = 8)
+#' scale_color_wb_b(palette = "seq", n.breaks = 8)
 #'
 #' @export
 
-scale_color_binned_wb <- function(...,
+scale_color_wb_b <- function(...,
                                  palette = "seq",
                                  na.value = WBCOLORS[["noData"]]) {
 
