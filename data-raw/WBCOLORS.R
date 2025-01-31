@@ -88,7 +88,27 @@ regionPalette <- c(
   WBCOLORS$eas,
   WBCOLORS$ssf,
   WBCOLORS$afe,
-  WBCOLORS$afw
+  WBCOLORS$afw,
+  WBCOLORS$wld#,
+  # WBCOLORS$nac,
+  # WBCOLORS$lcn,
+  # WBCOLORS$sas,
+  # WBCOLORS$mea,
+  # WBCOLORS$ecs,
+  # WBCOLORS$eas,
+  # WBCOLORS$ssf,
+  # WBCOLORS$afe,
+  # WBCOLORS$afw,
+  # WBCOLORS$wld,
+  # WBCOLORS$nac,
+  # WBCOLORS$lcn,
+  # WBCOLORS$sas,
+  # WBCOLORS$mea,
+  # WBCOLORS$ecs,
+  # WBCOLORS$eas,
+  # WBCOLORS$ssf,
+  # WBCOLORS$afe,
+  # WBCOLORS$afw
 )
 names(regionPalette) <- c(
   "wld",
@@ -100,7 +120,26 @@ names(regionPalette) <- c(
   "eas",
   "ssf",
   "afe",
-  "afw"
+  "afw"#,
+  # "NAC",
+  # "LCN",
+  # "SAS",
+  # "MEA",
+  # "ECS",
+  # "EAS",
+  # "SSF",
+  # "AFE",
+  # "AFW",
+  # "World",
+  # "North America",
+  # "Latin America & Caribbean",
+  # "South Asia",
+  # "Middle East & North Africa",
+  # "Europe & Central Asia",
+  # "East Asia & Pacific",
+  # "Sub-Saharan Africa",
+  # "Africa Eastern and Southern",
+  # "Africa Western and Central"
 )
 discretePalettesValues[['region']] <- regionPalette
 

@@ -65,10 +65,10 @@ We can make a standard ggplot bar chart from the life expectancy data for 2022.
 ```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
 country.names <- select(countries, iso3c, country)
 
-life.22 <- filter(life.expectancy, date == 2022) %>%
+life.22 <- filter(life.expectancy, date == 2022) |>
   select(iso3c, SP.DYN.LE00.IN)
 
-life.22.top10 <- head(dplyr::arrange(life.22, desc(SP.DYN.LE00.IN)),10) %>%
+life.22.top10 <- head(dplyr::arrange(life.22, desc(SP.DYN.LE00.IN)),10) |>
   left_join(country.names, by = "iso3c")
 
 barchart <- ggplot(life.22.top10, aes(
@@ -123,10 +123,10 @@ Now let's do the same thing for a scatter plot. We can get some additional data 
 
 ```{r}
 gdp <- wbstats::wb_data("NY.GDP.PCAP.PP.CD")
-gdp.22 <- filter(gdp, date == 2022) %>%
+gdp.22 <- filter(gdp, date == 2022) |>
   select(iso3c, NY.GDP.PCAP.PP.CD)
 
-scatterdata <- left_join(gdp.22, life.22, by = "iso3c") %>%
+scatterdata <- left_join(gdp.22, life.22, by = "iso3c") |>
   left_join(countries, by = "iso3c")
 print(scatterdata)
 ```
@@ -176,6 +176,13 @@ Each World Bank also has a color assigned to it in the `region` palette, so we c
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
   aes(fill = tolower(region_iso3c)) +
+  theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
+  scale_fill_wb_d(palette = "region", name = "Region")
+```
+
+```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
+scatterplot +
+  aes(fill = region_iso3c) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
   scale_fill_wb_d(palette = "region", name = "Region")
 ```
@@ -254,9 +261,9 @@ Here you can see that all colors of the World Bank data visualization style are 
 Finally, let's create a beeswarm plot and style it. To plot a beeswarm plot, we use the ggbeeswarm package.
 
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
-lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
-  left_join(countries, by = "iso3c") %>%
-  filter(income_level_iso3c != "INX") %>%
+lifeexp.22 <- filter(life.expectancy, date == 2022) |>
+  left_join(countries, by = "iso3c") |>
+  filter(income_level_iso3c != "INX") |>
   mutate(income_level_iso3c = factor(income_level_iso3c, levels = c("HIC", "UMC", "LMC", "LIC")))
 
 beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +

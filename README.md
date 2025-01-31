@@ -83,7 +83,7 @@ To generate beeswarm plots with ggplot2, you can install the `ggbeeswarm` packag
 For beeswarm charts, the x aesthetic should be mapped to a numerical variable, and the y aesthetic to a discrete variable.
 
 ```
-lifeexp.22 <- filter(life.expectancy, date == 2022) %>%
+lifeexp.22 <- filter(life.expectancy, date == 2022) |>
   left_join(countries, by = "iso3c")
 
 ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +
