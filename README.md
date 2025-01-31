@@ -14,7 +14,15 @@ devtools::install_github("worldbank/wbplot", auth_token = "MyPersonalToken")
 
 ## Using the package
 
-When the package is installed, load it into your R session with `library(wbplot)`. The following functions and variables will become available.
+When the package is installed, load it into your R session with `library(wbplot)`.
+
+```
+library(ggplot2)
+library(ggbeeswarm)
+library(wbplot)
+```
+
+The following functions and variables will become available.
 
 ### theme_wb()
 
@@ -53,7 +61,7 @@ ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
 
 The `lineend` in `geom_line()` should be set to "round". This is not the default, and is not configurable through the theme, so it should be set manually.
 
-![A line chart showing country life expectancy time series](images/line.png)
+![](images/line.png)
 
 With __`chartType = "bar"`__, both vertical and horizontal grid lines are removed, the X axis is moved to the top, and the bar labels are capitalized and bolded. The X axis title is removed, but can be added with `addXAxisTitle = TRUE`.
 
@@ -62,7 +70,7 @@ For bar charts, the x aesthetic should be mapped to a numerical variable, and th
 The World Bank data visualization style calls for value labels next to the bars, which you can add with ggplot2's `geom_text()` (the default font size, font family, color and alignment (hjust) of `geom_text()` are modified by the theme). If some of the labels are cut off, you can add margin the right of the chart with `xExpansion`.
 
 ```
-country.latitudes <- head(dplyr::arrange(countries.edited, desc(latitude)),10)
+country.latitudes <- head(dplyr::arrange(countries, desc(latitude)),10)
 
 ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
   theme_wb(chartType = "bar", xExpansion = 3, addXAxisTitle = TRUE) +
@@ -72,7 +80,7 @@ ggplot(country.latitudes, aes(x = latitude, y = reorder(country, latitude))) +
   xlab("Latitude (degrees North)")
 ```
 
-![A bar chart showing country latitudes](images/bar.png)
+![](images/bar.png)
 
 The ggplot2 default for `width` in `geom_bar()` (the width of the bars, as a percentage of space available for each bar) is 0.9, which leads to very dense bar charts. This default value is not adjustable through the theme, so in order to generate more visually balanced bar charts, the width should be set to a lower value. A value of 0.66 gives 2 thirds to the bars, and 1 third to spacing between them.
 
@@ -99,7 +107,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolowe
   theme(legend.position = "none")
 ```
 
-![A beeswarm chart showing country life expectancy in 2022, split by income levels](images/beeswarm.png)
+![](images/beeswarm.png)
 
 Here is an example of single beeswarm, created with a dummy y aesthetic:
 
@@ -120,7 +128,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_le
   )
 ```
 
-![A beeswarm plot showing country life expectancy in 2022](images/beeswarm-single.png)
+![](images/beeswarm-single.png)
 
 With __`chartType = "scatter"`__, the plot is only styled, but no chart elements are removed (so `theme_wb()` has the same effect as `theme_wb(chartType = "scatter")`.
 
@@ -141,7 +149,7 @@ ggplot(countries, aes(longitude, latitude, fill = tolower(income_level_iso3c))) 
   theme(legend.title = element_blank())
 ```
 
-![A scatter plot of country latitudes versus longitudes](images/scatter.png)
+![](images/scatter.png)
 
 For all continuous axes (X axis for `bar`, `beeswarm` and `scatter`, Y axis for `line` and `scatter`), you can add a line indicating the zero value with `addXZeroLine = TRUE` or `addYZeroLine == TRUE`. When zero is not included on the axis initially, the axis will extend up until the zero value when a zero value line is added.
 
@@ -181,7 +189,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c)
   theme(legend.title = element_blank())
 ```
 
-![A scatter plot of country latitudes versus longitudes, with a discrete color scale showing the region each country belongs to](images/scatter-regions.png)
+![](images/scatter-regions.png)
 
 ```    
 ggplot(countries, ggplot2::aes(longitude, latitude, fill = longitude)) +
@@ -195,7 +203,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = longitude)) +
   scale_fill_wb_b(palette = "divPosNeg", name = "Longitude", n.breaks = 8)
 ```
 
-![A scatter plot of country latitudes versus longitudes, with a diverging binned scale for the fill aesthetic](images/scatter-binned.png)
+![](images/scatter-binned.png)
 
 ### add_note_wb()
 
@@ -215,7 +223,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c)
   add_note_wb(noteTitle = "Source:", note = "World Bank")
 ```
 
-![A scatter plot of country latitudes versus longitudes, with a discrete color scale showing the region each country belongs to, and a note stating World Bank as the source](images/scatter-regions-note.png)
+![](images/scatter-regions-note.png)
 
 ### Data
 
