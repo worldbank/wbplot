@@ -79,17 +79,17 @@ defaultTextPalette <- c(
 discretePalettesValues[['defaultText']] <- defaultTextPalette
 
 regionPalette <- c(
-  WBCOLORS$wld,
-  WBCOLORS$nac,
-  WBCOLORS$lcn,
-  WBCOLORS$sas,
-  WBCOLORS$mea,
-  WBCOLORS$ecs,
-  WBCOLORS$eas,
-  WBCOLORS$ssf,
-  WBCOLORS$afe,
-  WBCOLORS$afw,
-  WBCOLORS$wld#,
+  WBCOLORS$WLD,
+  WBCOLORS$NAC,
+  WBCOLORS$LCN,
+  WBCOLORS$SAS,
+  WBCOLORS$MEA,
+  WBCOLORS$ECS,
+  WBCOLORS$EAS,
+  WBCOLORS$SSF,
+  WBCOLORS$AFE,
+  WBCOLORS$AFW#,
+  # WBCOLORS$wld,
   # WBCOLORS$nac,
   # WBCOLORS$lcn,
   # WBCOLORS$sas,
@@ -111,25 +111,26 @@ regionPalette <- c(
   # WBCOLORS$afw
 )
 names(regionPalette) <- c(
-  "wld",
-  "nac",
-  "lcn",
-  "sas",
-  "mea",
-  "ecs",
-  "eas",
-  "ssf",
-  "afe",
-  "afw"#,
-  # "NAC",
-  # "LCN",
-  # "SAS",
-  # "MEA",
-  # "ECS",
-  # "EAS",
-  # "SSF",
-  # "AFE",
-  # "AFW",
+  # "wld",
+  # "nac",
+  # "lcn",
+  # "sas",
+  # "mea",
+  # "ecs",
+  # "eas",
+  # "ssf",
+  # "afe",
+  # "afw",
+  "WLD",
+  "NAC",
+  "LCN",
+  "SAS",
+  "MEA",
+  "ECS",
+  "EAS",
+  "SSF",
+  "AFE",
+  "AFW"#,
   # "World",
   # "North America",
   # "Latin America & Caribbean",
@@ -144,42 +145,42 @@ names(regionPalette) <- c(
 discretePalettesValues[['region']] <- regionPalette
 
 regionTextPalette <- c(
-  WBCOLORS$wldText,
-  WBCOLORS$nacText,
-  WBCOLORS$lcnText,
-  WBCOLORS$sasText,
-  WBCOLORS$meaText,
-  WBCOLORS$ecsText,
-  WBCOLORS$easText,
-  WBCOLORS$ssfText,
-  WBCOLORS$afeText,
-  WBCOLORS$afwText
+  WBCOLORS$WLDText,
+  WBCOLORS$NACText,
+  WBCOLORS$LCNText,
+  WBCOLORS$SASText,
+  WBCOLORS$MEAText,
+  WBCOLORS$ECSText,
+  WBCOLORS$EASText,
+  WBCOLORS$SSFText,
+  WBCOLORS$AFEText,
+  WBCOLORS$AFWText
 )
 names(regionTextPalette) <- c(
-  "wld",
-  "nac",
-  "lcn",
-  "sas",
-  "mea",
-  "ecs",
-  "eas",
-  "ssf",
-  "afe",
-  "afw"
+  "WLDText",
+  "NACText",
+  "LCNText",
+  "SASText",
+  "MEAText",
+  "ECSText",
+  "EASText",
+  "SSFText",
+  "AFEText",
+  "AFWText"
 )
 discretePalettesValues[['regionText']] <- regionTextPalette
 
 incomePalette <- c(
-  WBCOLORS$hic,
-  WBCOLORS$umc,
-  WBCOLORS$lmc,
-  WBCOLORS$lic
+  WBCOLORS$HIC,
+  WBCOLORS$UMC,
+  WBCOLORS$LMC,
+  WBCOLORS$LIC
 )
 names(incomePalette) <- c(
-  "hic",
-  "umc",
-  "lmc",
-  "lic"
+  "HIC",
+  "UMC",
+  "LMC",
+  "LIC"
 )
 discretePalettesValues[['income']] <- incomePalette
 

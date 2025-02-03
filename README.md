@@ -17,6 +17,7 @@ devtools::install_github("worldbank/wbplot", auth_token = "MyPersonalToken")
 When the package is installed, load it into your R session with `library(wbplot)`.
 
 ```
+library(dplyr)
 library(ggplot2)
 library(ggbeeswarm)
 library(wbplot)
@@ -52,7 +53,7 @@ lifexp <- dplyr::filter(life.expectancy, iso3c %in% c("USA", "CHN", "IND", "DEU"
 
 ggplot(lifexp, aes(x = date, y = SP.DYN.LE00.IN, color = iso3c)) +
   theme_wb(chartType = "line") +
-  geom_line(data = life.expectancy, lineend = "round", color = WBCOLORS$darkest, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
+  geom_line(data = life.expectancy, lineend = "round", color = WBCOLORS$grey500, alpha = 0.15, linewidth = 0.25, ggplot2::aes(group = iso3c)) +
   geom_line(lineend = "round") +
   ggtitle("Your chart title", subtitle = "Life expectancy at birth, total (years)") +
   theme(legend.title = element_blank()) +
@@ -94,7 +95,7 @@ For beeswarm charts, the x aesthetic should be mapped to a numerical variable, a
 lifeexp.22 <- filter(life.expectancy, date == 2022) |>
   left_join(countries, by = "iso3c")
 
-ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +
+ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = income_level_iso3c)) +
   ggbeeswarm::geom_beeswarm(
     cex = 2.5,
     method = "swarm",
@@ -112,7 +113,7 @@ ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolowe
 Here is an example of single beeswarm, created with a dummy y aesthetic:
 
 ```
-ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = tolower(income_level_iso3c))) +
+ggplot(lifeexp.22, aes(x = SP.DYN.LE00.IN, y = "dummy", fill = income_level_iso3c)) +
   ggbeeswarm::geom_beeswarm(
     cex = 4,
     method = "compactswarm",
@@ -137,7 +138,7 @@ The default shape for `geom_point()` is modified by the theme to a filled circle
 For scatter plots, both the x and the y aesthetic should be mapped to a numerical variable.
 
 ```
-ggplot(countries, aes(longitude, latitude, fill = tolower(income_level_iso3c))) +
+ggplot(countries, aes(longitude, latitude, fill = income_level_iso3c)) +
   theme_wb(chartType = "scatter") +
   geom_point() +
   labs(
@@ -177,7 +178,7 @@ wbplot comes with 6 color scale functions:
     - `binary`: colors for binary variables. Matches the levels "yes" and "no"
 
 ```    
-ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c))) +
+ggplot(countries, ggplot2::aes(longitude, latitude, fill = region_iso3c)) +
   theme_wb(chartType = "scatter", addYZeroLine = TRUE, addXZeroLine = TRUE) +
   geom_point() +
   labs(
@@ -210,7 +211,7 @@ ggplot(countries, ggplot2::aes(longitude, latitude, fill = longitude)) +
 To add a note or source reference at the bottom of your plot, add the `add_note_wb()` to your ggplot. Use the `noteTitle` for the title of the note (which will be displayed in bold), and the `note` parameter for the body of the note.
 
 ```    
-ggplot(countries, ggplot2::aes(longitude, latitude, fill = tolower(region_iso3c))) +
+ggplot(countries, ggplot2::aes(longitude, latitude, fill = region_iso3c)) +
   theme_wb(chartType = "scatter", addYZeroLine = TRUE, addXZeroLine = TRUE) +
   geom_point() +
   labs(

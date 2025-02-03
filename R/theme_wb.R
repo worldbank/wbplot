@@ -63,7 +63,7 @@ theme_wb <- function(
   ggplot2::update_geom_defaults("text", ggplot2::aes(
     hjust = 0,
     size = baseSize*0.7/ggplot2::.pt,
-    color = WBCOLORS$darkText,
+    color = WBCOLORS$text,
     family = "Open Sans 600")
   )
 
@@ -134,7 +134,7 @@ theme_wb <- function(
     # Plot grid styling
     panel.grid.major = ggplot2::element_line(
       color = get_color(WBSTYLE$gridLine$color),
-      linewidth = WBCOLORS$gridLine$lineWidth/2,
+      linewidth = WBSTYLE$gridLine$lineWidth/2,
       linetype = "42"
     ),
     panel.grid.minor = ggplot2::element_blank(),
@@ -166,17 +166,17 @@ theme_wb <- function(
     theme_custom <- theme_custom + ggplot2::theme(
 
       # Continuous axis styling
-      axis.ticks.x = if(chartType == "bar") ggplot2::element_line(color = WBCOLORS$lighter) else ggplot2::element_blank(),
+      axis.ticks.x = if(chartType == "bar") ggplot2::element_line(color = WBCOLORS$grey200) else ggplot2::element_blank(),
       axis.ticks.length.x = ggplot2::unit(0.3, "lines"),
       axis.text.x = ggplot2::element_text(
-        color = WBCOLORS$lightText,
+        color = WBCOLORS$textSubtle,
       ),
       axis.title.x = if(addXAxisTitle == FALSE) ggplot2::element_blank() else ggplot2::element_text(),
 
       # Discrete axis styling
       axis.ticks.y = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_text(
-        color = WBCOLORS$darkText,
+        color = WBCOLORS$text,
         family = "Open Sans 600",
         hjust = 0,
         size = rel(0.8)
