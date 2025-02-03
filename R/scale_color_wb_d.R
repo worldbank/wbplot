@@ -16,11 +16,6 @@ scale_color_wb_d <- function(...,
                              palette = "default",
                              na.value = WBCOLORS[["noData"]]) {
 
-  pal_function <- function(palette){
-    function(n){
-      return(head(palette, n + 1))
-    }
-  }
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
   }
@@ -28,9 +23,9 @@ scale_color_wb_d <- function(...,
   if(palette %in% c('default', 'defaultText', 'region', 'regionText', 'income', 'gender', 'urbanisation', 'age', 'binary')){
     pal <- WBPALETTES[[palette]]
 
-    ggplot2::discrete_scale(
+    ggplot2::scale_color_manual(
       aesthetics = "colour",
-      palette = pal_function(pal),
+      values = pal,
       na.value = na.value,
       labels = makeUpperCase,
       guide = ggplot2::guide_legend(nrow = 1),
