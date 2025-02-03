@@ -247,7 +247,7 @@ linechart +
     data = life.expectancy,
     aes(group = iso3c),
     lineend = "round",
-    color = WBCOLORS$darkest,
+    color = WBCOLORS$grey500,
     alpha = 0.15,
     linewidth = 0.25
   ) +
