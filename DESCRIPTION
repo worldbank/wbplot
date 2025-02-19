@@ -1,9 +1,9 @@
 Package: wbplot
 Title: The World Bank ggplot2 theme
 Version: 0.1.0
-Authors@R: 
+Authors@R: c(
     person("Maarten", "Lambrechts", , "mlambrechts@worldbank.org", role = c("aut", "cre")),
-    person("World Bank Group", role = c("cph", "fnd"))
+    person("World Bank Group", role = c("cph", "fnd")))
 Maintainer: Maarten Lambrechts <mlambrechts@worldbank.org>
 Description: Style ggplot2 visualizations according to the World Bank data visualization style.
 License: MIT + file LICENSE
