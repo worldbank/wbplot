@@ -1,8 +1,9 @@
 Package: wbplot
-Title: A World Bank ggplot theme
-Version: 0.0.1.5
+Title: The World Bank ggplot2 theme
+Version: 0.1.0
 Authors@R: 
-    person("Maarten", "Lambrechts", , "mlambrechts@worldbank.org", role = c("aut", "cre"))
+    person("Maarten", "Lambrechts", , "mlambrechts@worldbank.org", role = c("aut", "cre")),
+    person("World Bank Group", role = c("cph", "fnd"))
 Maintainer: Maarten Lambrechts <mlambrechts@worldbank.org>
 Description: Style ggplot2 visualizations according to the World Bank data visualization style.
 License: MIT + file LICENSE
@@ -15,9 +16,12 @@ Imports:
   showtext,
   sysfonts
 Depends: 
-    R (>= 2.10)
+  R (>= 2.10)
 LazyData: true
 Suggests: 
-    knitr,
-    rmarkdown
+  knitr,
+  rmarkdown,
+  dplyr,
+  ggbeeswarm,
+  wbstats
 VignetteBuilder: knitr

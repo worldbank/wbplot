@@ -175,7 +175,7 @@ Each World Bank also has a color assigned to it in the `region` palette, so we c
 
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
-  aes(fill = tolower(region_iso3c)) +
+  aes(fill = region_iso3c) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
   scale_fill_wb_d(palette = "region", name = "Region")
 ```
@@ -191,7 +191,7 @@ Income levels also have their own palette, called "income".
 
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
-  aes(fill = tolower(income_level_iso3c)) +
+  aes(fill = income_level_iso3c) +
   theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
   scale_fill_wb_d(palette = "income", name = "Income level")
 ```
@@ -266,7 +266,7 @@ lifeexp.22 <- filter(life.expectancy, date == 2022) |>
   filter(income_level_iso3c != "INX") |>
   mutate(income_level_iso3c = factor(income_level_iso3c, levels = c("HIC", "UMC", "LMC", "LIC")))
 
-beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = tolower(income_level_iso3c))) +
+beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = income_level_iso3c)) +
   ggbeeswarm::geom_beeswarm(
     cex = 2.5,
     method = "swarm",

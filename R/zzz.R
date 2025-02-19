@@ -11,7 +11,6 @@
   }
   showtext::showtext_opts(dpi = 300)
   showtext::showtext_auto()
-  message("Open Sans fonts ready to use")
 }
 
 .onAttach <- function(libname, pkgname) {

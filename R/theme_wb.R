@@ -158,7 +158,7 @@ theme_wb <- function(
     ),
     legend.key.spacing.x = ggplot2::unit(0, "lines"),
     #legend.key.spacing.y = ggplot2::unit(0.7, "lines")
-    legend.key.width = unit(1, "null")
+    legend.key.width = ggplot2::unit(1, "null")
   )
 
   # Bar and beeswarm chart styling
@@ -179,10 +179,10 @@ theme_wb <- function(
         color = WBCOLORS$text,
         family = "Open Sans 600",
         hjust = 0,
-        size = rel(0.8)
+        size = ggplot2::rel(0.8)
       ),
       axis.title.y = ggplot2::element_blank(),
-      legend.key.width = unit(0, 'mm'),
+      legend.key.width = ggplot2::unit(0, 'mm'),
     )
     theme_custom <- list(
       theme_custom,

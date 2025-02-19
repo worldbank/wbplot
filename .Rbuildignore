@@ -5,3 +5,4 @@ dev
 data-raw
 images
 examples
+^cran-comments\.md$
