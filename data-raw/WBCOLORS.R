@@ -1,4 +1,5 @@
 # Code to prepare `WBCOLORS` dataset goes here
+library(jsonlite)
 
 ## All the colors, as a named list
 WBCOLORS <- jsonlite::read_json("data-raw/wb-colors.json", simplifyVector = TRUE)

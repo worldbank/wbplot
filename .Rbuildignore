@@ -2,7 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 dev
-data-raw
+^data-raw$
 images
 examples
 ^cran-comments\.md$

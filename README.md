@@ -4,9 +4,7 @@ The World Bank ggplot2 theme.
 
 ## Installation
 
-Install the package from CRAN with install.packages("wbplot")
-
-Alternatively, install the development version of the package with `devtools::install_github("worldbank/wbplot")` or `remotes::install_github("worldbank/wbplot")`.
+Install the package with `devtools::install_github("worldbank/wbplot")` or `remotes::install_github("worldbank/wbplot")`.
 
 Doing this, you might run into an authentication error. To overcome this, generate a token on [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens) and run 
 

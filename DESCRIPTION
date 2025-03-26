@@ -14,8 +14,7 @@ Imports:
   ggplot2 (>= 3.5.0),
   scales,
   showtext,
-  sysfonts,
-  jsonlite
+  sysfonts
 Depends: 
   R (>= 2.10)
 LazyData: true
@@ -24,5 +23,6 @@ Suggests:
   rmarkdown,
   dplyr,
   ggbeeswarm,
-  wbstats
+  wbstats,
+  jsonlite
 VignetteBuilder: knitr
