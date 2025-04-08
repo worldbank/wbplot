@@ -7,10 +7,10 @@ WBCOLORS <- jsonlite::read_json("data-raw/wb-colors.json", simplifyVector = TRUE
 usethis::use_data(WBCOLORS, overwrite = TRUE)
 
 ## Sequential and diverging palettes
-seqPalettes <- c("seq", "seqRev", "seqB", "seqY", "seqP")
-divPalettes <- c("divPosNeg", "divLR")
+seqPalettes <- c("seq", "seqRev", "seqB", "seqY", "seqP", "seqG", "seqR")
+divPalettes <- c("divPosNeg", "div2", "div3")
 
-seqPalettesValues <- vector(mode = "list", length = 5)
+seqPalettesValues <- vector(mode = "list", length = 7)
 names(seqPalettesValues) <- seqPalettes
 for (pal in seqPalettes){
   seqPalettesValues[[pal]] <- colorRampPalette(
@@ -24,7 +24,7 @@ for (pal in seqPalettes){
     )(256)
 }
 
-divPalettesValues <- vector(mode = "list", length = 2)
+divPalettesValues <- vector(mode = "list", length = 3)
 names(divPalettesValues) <- divPalettes
 divPalettesValues[['divPosNeg']] <- colorRampPalette(
   space = 'Lab',
@@ -37,7 +37,7 @@ divPalettesValues[['divPosNeg']] <- colorRampPalette(
     WBCOLORS$divNeg2,
     WBCOLORS$divNeg3)
   )(256)
-divPalettesValues[['divLR']] <- colorRampPalette(
+divPalettesValues[['div2']] <- colorRampPalette(
   space = 'Lab',
   c(
     WBCOLORS$div2L3,
@@ -48,6 +48,17 @@ divPalettesValues[['divLR']] <- colorRampPalette(
     WBCOLORS$div2R2,
     WBCOLORS$div2R3)
   )(256)
+divPalettesValues[['div3']] <- colorRampPalette(
+  space = 'Lab',
+  c(
+    WBCOLORS$div3L3,
+    WBCOLORS$div3L2,
+    WBCOLORS$div3L1,
+    WBCOLORS$div3Mid,
+    WBCOLORS$div3R1,
+    WBCOLORS$div3R2,
+    WBCOLORS$div3R3)
+)(256)
 
 ## Discrete palettes
 discretePalettesValues <- vector(mode = "list", length = 9)

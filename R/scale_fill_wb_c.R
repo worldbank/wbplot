@@ -18,7 +18,7 @@ scale_fill_wb_c <- function(...,
                            direction = 1,
                            na.value = WBCOLORS[["noData"]]) {
 
-  if(palette %in% c('seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', 'divLR')){
+  if(palette %in% c('seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'seqG', 'seqR', 'divPosNeg', 'div2', 'div3')){
     pal <- WBPALETTES[[palette]]
 
     ggplot2::continuous_scale(
