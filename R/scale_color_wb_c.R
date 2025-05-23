@@ -18,8 +18,15 @@ scale_color_wb_c <- function(...,
                                direction = 1,
                                na.value = WBCOLORS[["noData"]]) {
 
-  if(palette %in% c('seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'seqG', 'seqR', 'divPosNeg', , 'div2', 'div3')){
+  if(palette %in% c('seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'seqG', 'seqR', 'divPosNeg', 'div2', 'div3')){
     pal <- WBPALETTES[[palette]]
+
+    if (!direction %in% c(1, -1)) {
+      stop("`direction` must be 1 or -1")
+    }
+    if(direction == -1){
+      pal <- rev(pal)
+    }
 
     ggplot2::continuous_scale(
       aesthetics = "colour",
@@ -42,6 +49,6 @@ scale_color_wb_c <- function(...,
       ...
     )
   } else {
-    cat("The palette does not exist. It should be 'seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', or 'divLR'")
+    cat("The palette does not exist. It should be 'seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', 'div2', or 'div3'")
   }
 }
