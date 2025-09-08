@@ -4,12 +4,19 @@
 \alias{scale_fill_wb_b}
 \title{Binned fill scales with WB palettes}
 \usage{
-scale_fill_wb_b(..., palette = "seq", na.value = WBCOLORS[["noData"]])
+scale_fill_wb_b(
+  ...,
+  palette = "seq",
+  direction = 1,
+  na.value = WBCOLORS[["noData"]]
+)
 }
 \arguments{
 \item{...}{Other arguments passed to scale_fill_binned()}
 
 \item{palette}{The WB color palette to use. One of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', or 'divLR'}
+
+\item{direction}{Sets the order of colours in the scale. 1 is the default,  if -1, the order of colours is reversed}
 
 \item{na.value}{Color to use for NA values}
 }

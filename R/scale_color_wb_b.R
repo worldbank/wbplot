@@ -2,6 +2,7 @@
 #'
 #'
 #' @param palette The WB color palette to use. One of 'seq', 'seqRev', 'seqB', 'seqY', 'seqP', 'divPosNeg', or 'divLR'
+#' @param direction Sets the order of colours in the scale. 1 is the default,  if -1, the order of colours is reversed
 #' @param na.value Color to use for NA values
 #' @param ... Other arguments passed to scale_fill_binned()
 #'
