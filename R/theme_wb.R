@@ -40,6 +40,7 @@ theme_wb <- function(
   }
 
   # Change default color palettes
+  # CHANGE TO palette.colour.continuous, palette.fill.continuous, ggplot2.binned.colour, ggplot2.binned.fill AND DISCRETE PALETTES 
   # This is not working (with on.exit everything is always reverted, and without it we're changing the R landscape)
   # old <- options(
   #   ggplot2.discrete.colour = ggplot2::scale_fill_hue,
@@ -56,7 +57,7 @@ theme_wb <- function(
   # )
 
   # Change default geom aesthetics
-  # Should be reset to the ggplot defaults after use somehow
+  # Should be reset to the ggplot defaults after use somehow => DO THIS WITH reset_geom_defaults in zzz.R
   ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
   ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
   ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))

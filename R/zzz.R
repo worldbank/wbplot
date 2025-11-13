@@ -17,3 +17,7 @@
   # to show a startup message
   packageStartupMessage("Attaching package 'wbplot'")
 }
+
+.onDetach <- function(libpath){
+  ggplot2::reset_geom_defaults()
+}
