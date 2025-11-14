@@ -5,7 +5,7 @@
 #' @param units Units of the dimensions of the imagefile
 #' @param width The width of the image file
 #' @param height The height of the image file
-#' @param scale The scale factor
+#' @param dpi The resolution of the image file
 #' @param ... Other arguments passed to ggsave()
 #'
 #' @return None
@@ -22,7 +22,6 @@ ggsave_wb <- function(
     units = "px",
     width = 960,
     height = 540,
-    scale = 1,
     dpi = 200,
     ...) {
   ggplot2::ggsave(
@@ -30,6 +29,6 @@ ggsave_wb <- function(
     units = "px",
     width = width,
     height = height,
-    scale = scale,
+    dpi = dpi,
     ...)
 }
