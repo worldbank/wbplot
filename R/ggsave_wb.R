@@ -22,7 +22,8 @@ ggsave_wb <- function(
     units = "px",
     width = 960,
     height = 540,
-    scale = 2,
+    scale = 1,
+    dpi = 200,
     ...) {
   ggplot2::ggsave(
     filename = filename,
