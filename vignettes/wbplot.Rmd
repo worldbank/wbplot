@@ -103,7 +103,7 @@ It will also avoid scales to expand beyond the values in the data, which might c
 barchart + theme_wb(chartType = "bar", xExpansion = 3)
 ```
 
-If you need a title for the x axis, you can add it again with the `addXAxisTitle` parameter (which you then should set with `ggplot2::xlab()`.
+If you need a title for the x axis, you can add it again with the `addXAxisTitle` parameter (which you then should set with `ggplot2::xlab()`).
 
 ```{r, fig.dim = c(8,4), dpi = 300, out.width = "100%"}
 barchart + theme_wb(chartType = "bar", xExpansion = 3, addXAxisTitle = TRUE)
@@ -167,18 +167,11 @@ The wbplot package includes continuous and discrete color scales for the World B
 
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
-  theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
+  theme_wb(chartType = "scatter", addXZeroLine = TRUE, addYZeroLine = TRUE) +
   scale_fill_wb_d(name = "Region")
 ```
 
 Each World Bank also has a color assigned to it in the `region` palette, so we can map the region code directly to the corresponding color.
-
-```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
-scatterplot +
-  aes(fill = region_iso3c) +
-  theme_wb(chartType = "scatter", addXZeroLine = TRUE) +
-  scale_fill_wb_d(palette = "region", name = "Region")
-```
 
 ```{r, fig.dim = c(8,6), dpi = 300, out.width = "100%", warning = FALSE}
 scatterplot +
@@ -268,10 +261,10 @@ lifeexp.22 <- filter(life.expectancy, date == 2022) |>
 
 beeswarm <- ggplot(lifeexp.22, ggplot2::aes(x = SP.DYN.LE00.IN, y = income_level_iso3c, fill = income_level_iso3c)) +
   ggbeeswarm::geom_beeswarm(
-    cex = 2.5,
+    cex = 2,
     method = "swarm",
     priority = "random",
-    size = 3
+    size = 2.5
   ) +
   ggtitle("Countries with higher income have longer life expectancy", subtitle = "Life expectancy at birth (total (years), 2022)") +
   theme(legend.position = "none")
@@ -310,10 +303,10 @@ WBPALETTES$gender
 
 ## Saving plots
 
-As always , you can save plots with `ggsave()`. You should be able to get good results by setting `units` to "px", `width` to 960, and `scale` to 2. The optimal `height` is determined by the chart type and the data, but the default is 540.
+As always , you can save plots with `ggsave()`. You should be able to get good results by setting `units` to "px" and `width` to 960. The optimal `height` is determined by the chart type and the data, but the default is 540.
 
 ```{r, eval = FALSE}
-ggsave(filename = "my-worldbank-chart.png", units = "px", width = 960, height = 540, scale = 2)
+ggsave(filename = "my-worldbank-chart.png", units = "px", width = 960, height = 960, dpi = 200)
 ```
 
-For convenience, you can use `ggsave_wb(filename = "my-worldbank-chart.png")`, which has these values for units, dimensions and scale by default.
+For convenience, you can use `ggsave_wb(filename = "my-worldbank-chart.png")`, which has these values for units, dimensions and dpi by default.

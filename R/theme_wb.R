@@ -31,40 +31,21 @@ theme_wb <- function(
   # Warnings for cases where zero lines can't be added
   if(addXZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
   if(addYZeroLine & chartType == "bar") warning("Zero lines can't be added to bar charts")
-  if(addYZeroLine & chartType == "beeswarm") warning("Zero lines can't be added discrete scales")
+  if(addYZeroLine & chartType == "beeswarm") warning("Zero lines can't be added to discrete scales")
   if(addXZeroLine & chartType == "line") warning("Zero lines can't be added to date/time scales")
 
-  # Makes text uppercase, used for the labels on categorical axes and for categorical legend labesl
+  # Makes text uppercase, used for the labels on categorical axes and for categorical legend labels
   makeUpperCase <- function(lowcase){
     return(toupper(lowcase))
   }
 
-  # Change default color palettes
-  # This is not working (with on.exit everything is always reverted, and without it we're changing the R landscape)
-  # old <- options(
-  #   ggplot2.discrete.colour = ggplot2::scale_fill_hue,
-  #   ggplot2.discrete.fill = ggplot2::scale_fill_hue,
-  #   ggplot.continuous.colour = ggplot2::scale_colour_continuous,
-  #   ggplot.continuous.fill = ggplot2::scale_colour_continuous
-  # )
-  # on.exit(options(old), add = TRUE)
-  # options(
-  #   ggplot2.discrete.colour = WBPALETTES$default,
-  #   ggplot2.discrete.fill = WBPALETTES$default,
-  #   ggplot2.continuous.colour = WBPALETTES$seq,
-  #   ggplot2.continuous.fill = WBPALETTES$seq
-  # )
-
   # Change default geom aesthetics
-  # Should be reset to the ggplot defaults after use somehow
-  ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
-  ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
-  ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
+  # update_geom_defaults persists through the whole session, use theme(element_geom()) instead
+  # Should be reset to the ggplot defaults after use somehow => reset_geom_defaults in zzz.R
   ggplot2::update_geom_defaults("text", ggplot2::aes(
     hjust = 0,
-    size = baseSize*0.7/ggplot2::.pt,
     color = WBCOLORS$text,
-    family = "Open Sans 600")
+    )
   )
 
   baseSize <- 11
@@ -81,7 +62,7 @@ theme_wb <- function(
     linewidth = WBSTYLE$zeroLine$lineWidth/3
   )
 
-  theme_custom <- ggplot2::theme_minimal(base_size = baseSize) +
+  theme_custom <- ggplot2::theme_minimal() +
   # General theme settings
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
@@ -92,6 +73,26 @@ theme_wb <- function(
       l = 8,
       r = 8
     ),
+
+    # Default palettes
+    palette.colour.continuous = WBPALETTES$seq,
+    palette.fill.continuous = WBPALETTES$seq,
+    palette.colour.discrete = WBPALETTES$default,
+    palette.fill.discrete = WBPALETTES$default,
+
+    # Geom defaults
+    geom = ggplot2::element_geom(
+      pointshape = 21,
+      pointsize = 2,
+      color = "white",
+      fill = WBCOLORS$cat1,
+      linewidth = 0.8,
+      paper = "white",
+      ink = WBCOLORS$cat1,
+      family = "Open Sans 600",
+      fontsize = baseSize*0.7/ggplot2::.pt
+    ),
+
 
     # Plot title styling
     plot.title = ggplot2::element_text(
