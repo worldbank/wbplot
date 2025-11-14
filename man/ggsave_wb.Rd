@@ -9,7 +9,6 @@ ggsave_wb(
   units = "px",
   width = 960,
   height = 540,
-  scale = 1,
   dpi = 200,
   ...
 )
@@ -23,7 +22,7 @@ ggsave_wb(
 
 \item{height}{The height of the image file}
 
-\item{scale}{The scale factor}
+\item{dpi}{The resolution of the image file}
 
 \item{...}{Other arguments passed to ggsave()}
 }

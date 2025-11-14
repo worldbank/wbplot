@@ -35,12 +35,12 @@ scale_fill_wb_b <- function(...,
       guide = ggplot2::guide_colourbar(
         theme = ggplot2::theme(
           legend.key.height = ggplot2::unit(0.5, "lines"),
-          legend.frame = ggplot2::element_rect(colour = WBCOLORS$middle, linewidth = 0.25),
+          legend.frame = ggplot2::element_rect(colour = WBCOLORS$grey300, linewidth = 0.25),
           legend.text.position = "top",
-          legend.ticks = ggplot2::element_line(colour = WBCOLORS$middle, linewidth = 0.25),
+          legend.ticks = ggplot2::element_line(colour = WBCOLORS$grey300, linewidth = 0.25),
           legend.ticks.length = ggplot2::unit(0.5, "lines"),
           legend.text = ggplot2::element_text(
-            color = WBCOLORS$lightText,
+            color = WBCOLORS$textSubtle,
             margin = ggplot2::margin(0, 0, 4, 0)),
           legend.key.width = ggplot2::unit(1, "null")
         ),
