@@ -79,7 +79,6 @@ theme_wb <- function(
     palette.fill.continuous = WBPALETTES$seq,
     palette.colour.discrete = WBPALETTES$default,
     palette.fill.discrete = WBPALETTES$default,
-    # Should binned scales also be added here?
 
     # Geom defaults
     geom = ggplot2::element_geom(
