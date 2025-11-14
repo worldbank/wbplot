@@ -1,6 +1,6 @@
 Package: wbplot
 Title: The World Bank ggplot2 Theme
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Maarten", "Lambrechts", , "mlambrechts@worldbank.org", role = c("aut", "cre")),
     person("World Bank Group", role = c("cph", "fnd")))
