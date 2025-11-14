@@ -9,7 +9,7 @@
         regular.wt = weight
       )
   }
-  showtext::showtext_opts(dpi = 300)
+  showtext::showtext_opts(dpi = 150)
   showtext::showtext_auto()
 }
 

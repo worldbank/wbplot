@@ -40,16 +40,11 @@ theme_wb <- function(
   }
 
   # Change default geom aesthetics
-  # Should be reset to the ggplot defaults after use somehow => DO THIS WITH reset_geom_defaults in zzz.R
-  # DIFFERENCES/ADVANTAGES OVER USING theme(element_geom())? => update_geom_defaults persists through the whole session, don't use it
-  #ggplot2::update_geom_defaults("point", ggplot2::aes(shape = 21, size = 2, color = "white"))
-  #ggplot2::update_geom_defaults("bar", ggplot2::aes(fill = WBCOLORS$cat1))
-  #ggplot2::update_geom_defaults("line", ggplot2::aes(linewidth = 0.8))
+  # update_geom_defaults persists through the whole session, use theme(element_geom()) instead
+  # Should be reset to the ggplot defaults after use somehow => reset_geom_defaults in zzz.R
   ggplot2::update_geom_defaults("text", ggplot2::aes(
     hjust = 0,
-    #size = baseSize*0.7/ggplot2::.pt,
     color = WBCOLORS$text,
-    #family = "Open Sans 600"
     )
   )
 
@@ -67,7 +62,7 @@ theme_wb <- function(
     linewidth = WBSTYLE$zeroLine$lineWidth/3
   )
 
-  theme_custom <- ggplot2::theme_minimal(base_size = baseSize) +
+  theme_custom <- ggplot2::theme_minimal() +
   # General theme settings
   ggplot2::theme(
     panel.background = ggplot2::element_blank(),
@@ -91,6 +86,7 @@ theme_wb <- function(
       pointshape = 21,
       pointsize = 2,
       color = "white",
+      fill = WBCOLORS$cat1,
       linewidth = 0.8,
       paper = "white",
       ink = WBCOLORS$cat1,
